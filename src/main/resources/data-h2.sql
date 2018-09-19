@@ -1,0 +1,1 @@
+INSERT INTO USUARIO (id, nombreUsuario, esAdmin, contrasena) VALUES (1, 'admin', true, '1234');
