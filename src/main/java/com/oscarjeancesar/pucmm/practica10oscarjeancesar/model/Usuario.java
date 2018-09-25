@@ -11,14 +11,14 @@ public class Usuario implements Serializable {
     private boolean esAdmin;
     private String contrasena;
 
+    public Usuario(){ }
+
     public Usuario(long id, String nombreUsuario, boolean esAdmin, String contrasena) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.esAdmin = esAdmin;
         this.contrasena = contrasena;
     }
-
-    public Usuario(){ }
 
     public long getId() {
         return id;
