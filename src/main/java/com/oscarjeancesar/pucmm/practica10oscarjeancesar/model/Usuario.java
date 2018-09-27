@@ -2,22 +2,28 @@ package com.oscarjeancesar.pucmm.practica10oscarjeancesar.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 public class Usuario implements Serializable {
     @Id
     private long id;
-    private String nombreUsuario;
+    private String username;
     private boolean esAdmin;
-    private String contrasena;
+    private String password;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private
+    Set<Rol> roles;
 
     public Usuario(){ }
 
-    public Usuario(long id, String nombreUsuario, boolean esAdmin, String contrasena) {
+    public Usuario(long id, String username, boolean esAdmin, String password, Set<Rol> roles) {
         this.id = id;
-        this.nombreUsuario = nombreUsuario;
+        this.username = username;
         this.esAdmin = esAdmin;
-        this.contrasena = contrasena;
+        this.password = password;
+        this.roles = roles;
     }
 
     public long getId() {
@@ -28,12 +34,12 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public boolean isEsAdmin() {
@@ -44,13 +50,20 @@ public class Usuario implements Serializable {
         this.esAdmin = esAdmin;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    public Set<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Rol> roles) {
+        this.roles = roles;
+    }
 
 }

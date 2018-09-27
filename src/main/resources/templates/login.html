@@ -17,13 +17,13 @@
                 <h2 th:text="#{tituloLogin}">!</h2>
                 <p th:text="#{mensajeLogin}"></p>
             </div>
-            <form id="Login" method="get" action="/">
+            <form id="Login" method="POST" action="/">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="username" th:placeholder="#{placeholderUsuario}">
+                    <input type="text" class="form-control" name="username" th:placeholder="#{placeholderUsuario}" required autofocus>
                 </div>
 
                 <div class="form-group">
-                    <input type="password" class="form-control" name="password" th:placeholder="#{placerholderContrasena}">
+                    <input type="password" class="form-control" name="password" th:placeholder="#{placerholderContrasena}" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary" th:text="#{botonEntrar}"></button>

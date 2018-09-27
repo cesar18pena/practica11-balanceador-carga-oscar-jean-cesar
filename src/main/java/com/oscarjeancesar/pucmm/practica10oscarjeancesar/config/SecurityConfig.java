@@ -2,6 +2,9 @@ package com.oscarjeancesar.pucmm.practica10oscarjeancesar.config;
 
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.UsuarioServices;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -16,12 +19,14 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    //Configuación para la validación del acceso modo JDBC
+//    // Configuación para la validación del acceso modo JDBC
 //    private DataSource dataSource;
 //    @Value("${query.user-jdbc}")
 //    private String queryUsuario;
 //    @Value("${query.rol-jdbc}")
 //    private String queryRol;
+//
+//    private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -32,25 +37,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("admin")
                 .password("1234")
-                .roles("ADMIN","USER")
+                .authorities("ADMIN","USER")
                 .and()
-                .withUser("usuario")
+                .withUser("user")
                 .password("1234")
-                .roles("USER")
-                .and()
-                .withUser("vendedor")
-                .password("1234")
-                .roles("VENDEDOR");
-
+                .authorities("USER");
 
         //Configuración para acceso vía JDBC
-       /* auth.jdbcAuthentication()
-                .usersByUsernameQuery(queryUsuario)
-                .authoritiesByUsernameQuery(queryRol)
-                .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);*/
-
-        //Configuración JPA.
+//       auth.jdbcAuthentication()
+//                .usersByUsernameQuery(queryUsuario)
+//                .authoritiesByUsernameQuery(queryRol)
+//                .dataSource(dataSource)
+//                .passwordEncoder(bCryptPasswordEncoder);
+//
+//        //Configuración JPA.
 //        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
@@ -66,12 +66,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**", "/js/**").permitAll() //permitiendo llamadas a esas urls.
                 .antMatchers("/dbconsole/**").permitAll()
-                .antMatchers("/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/**").hasAnyAuthority("ADMIN", "USER")
                 //.anyRequest().authenticated() //cualquier llamada debe ser validada
                 .and()
                 .formLogin()
                 .loginPage("/login") //indicando la ruta que estaremos utilizando.
                 .failureUrl("/login?error") //en caso de fallar puedo indicar otra pagina.
+                .defaultSuccessUrl("/")
                 .permitAll()
                 .and()
                 .logout()
@@ -81,5 +82,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //Necesario para H2.
         http.csrf().disable();
         http.headers().frameOptions().disable();
+    }
+
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+
+    public UserDetailsService userDetailsService() {
+        return super.userDetailsService();
     }
 }

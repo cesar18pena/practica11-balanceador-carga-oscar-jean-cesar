@@ -1,1 +1,1 @@
--- INSERT INTO usuario (contrasena, nombreUsuario) VALUES ('1234', 'admin');
+-- INSERT INTO usuario (password, username) VALUES ('1234', 'admin');
