@@ -44,8 +44,10 @@
                         </ul>
                         <strong class="avatar text-white">
                             <img src="https://i.imgur.com/rWS64lZ.gif" class="rounded-circle mr-2" alt="avatar">
-                            <span class="mr-2">${usuario}</span>
-                            <i class="rounded-circle border-icon fas fa-power-off"></i>
+                            <span class="mr-1">${usuario}</span>
+                            <form action="/logout" method="POST">
+                                <button type="submit" class="rounded-circle border-icon fas fa-power-off"></button>
+                            </form>
                         </strong>
                     </nav>
                 </div>
