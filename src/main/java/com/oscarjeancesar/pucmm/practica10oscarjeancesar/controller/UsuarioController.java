@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -29,25 +30,27 @@ public class UsuarioController {
         Set<Rol> roles = new HashSet<>();
         roles.add(new Rol("ADMIN"));
         roles.add(new Rol("USER"));
-        Usuario usuario = usuarioServices.crearUsuario(new Usuario(1, "admin", true, "1234", roles));
 
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
         model.addAttribute("inicio", messageSource.getMessage("inicio", null, locale));
 
+        model.addAttribute("usuario", principal.getName());
 
         return "index";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGET(Model model, Locale locale) {
-
         Set<Rol> roles = new HashSet<>();
         roles.add(new Rol("ADMIN"));
         roles.add(new Rol("USER"));
 
         Usuario usuario = usuarioServices.crearUsuario(new Usuario(1, "admin", true, "1234", roles));
 
+        model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
+        model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("inicio", messageSource.getMessage("inicio", null, locale));
         model.addAttribute("tituloLogin", messageSource.getMessage("tituloLogin", null, locale));
         model.addAttribute("mensajeLogin", messageSource.getMessage("mensajeLogin", null, locale));
         model.addAttribute("placeholderUsuario", messageSource.getMessage("placeholderUsuario", null, locale));
@@ -58,9 +61,11 @@ public class UsuarioController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPOST(Model model, @ModelAttribute("Usuario") Usuario usuario, Locale locale) {
-
-        usuarioServices.autoLogin(usuario.getUsername(), usuario.getPassword());
+    public String loginPOST(
+            @RequestParam(value = "username", required = false) String username,
+            @RequestParam(value = "password", required = false) String password
+    ) {
+        usuarioServices.autoLogin(username, password);
 
         return "redirect:/";
     }

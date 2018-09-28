@@ -1,5 +1,6 @@
 package com.oscarjeancesar.pucmm.practica10oscarjeancesar.service;
 
+import com.oscarjeancesar.pucmm.practica10oscarjeancesar.data.RoleRepository;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.data.UsuarioRepository;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Rol;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Usuario;
@@ -11,6 +12,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +27,21 @@ public class UsuarioServices implements SecurityService{
     private AuthenticationManager authenticationManager;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private RoleRepository rolRepository;
 
     @Transactional
     public Usuario crearUsuario(Usuario usuario) {
+        usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
+//        usuario.setRoles(new HashSet<>(rolRepository.findAll()));
         usuarioRepository.save(usuario);
         return usuario;
     }
@@ -50,10 +64,9 @@ public class UsuarioServices implements SecurityService{
         return null;
     }
 
-
     public void autoLogin(String username, String password) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password);
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 

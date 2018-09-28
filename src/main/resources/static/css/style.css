@@ -1,0 +1,35 @@
+body {
+    background: url("/img/fondo.jpg") !important;
+    height: 100%;
+    width: 100%;
+}
+
+nav {
+    background: #8009f7 !important;
+}
+
+.container-fluid {
+    background: rgba(255, 255, 255, 0.8) !important;
+    height: 100%;
+    width: 100%;
+}
+
+.avatar, .navbar-brand {
+    background: rgba(34, 34, 34, 0.8) !important;
+    border-radius: 5px;
+    font-style: italic;
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+}
+
+.avatar img {
+    background: #3e097b;
+    box-shadow: 3px 3px 3px rgba(34, 34, 34, 0.2);
+    width: 40px;
+}
+
+.border-icon {
+    background: rgba(255, 255, 255, 0.8);
+    color: #222;
+    padding: 0.25rem;
+}

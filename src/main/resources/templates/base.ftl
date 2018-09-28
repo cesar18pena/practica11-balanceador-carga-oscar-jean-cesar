@@ -1,5 +1,6 @@
+<#macro pagina logueado=false usuario="">
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" th:fragment="contenido(pagina)">
+<html lang="es">
 <head>
     <!-- Bootstrap 4.1 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -19,9 +20,9 @@
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
 
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="/css/style.css"/>
     <meta charset="UTF-8">
-    <title>Practica #10</title>
+    <title>${titulo}</title>
 </head>
 <body>
 <div class="container-fluid">
@@ -29,8 +30,8 @@
         <div class="col">
             <div class="row">
                 <div class="col-12 p-0">
-                    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
-                        <a class="navbar-brand" th:href="@{/}" th:text="#{titulo}"></a>
+                    <nav class="navbar navbar-expand-lg navbar-dark">
+                        <a class="navbar-brand" href="/">${titulo}</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
@@ -38,16 +39,21 @@
                         </button>
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" th:href="@{/}" th:text="#{inicio}"></a>
+                                <a class="nav-link" href="/">${inicio}</a>
                             </li>
                         </ul>
+                        <strong class="avatar text-white">
+                            <img src="https://i.imgur.com/rWS64lZ.gif" class="rounded-circle mr-2" alt="avatar">
+                            <span class="mr-2">${usuario}</span>
+                            <i class="rounded-circle border-icon fas fa-power-off"></i>
+                        </strong>
                     </nav>
                 </div>
             </div>
-            <div class="pagina" th:replace="${pagina}">
-            </div>
+            <#nested>
         </div>
     </div>
 </div>
 </body>
 </html>
+</#macro>
