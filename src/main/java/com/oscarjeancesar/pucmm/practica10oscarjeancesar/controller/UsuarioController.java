@@ -33,7 +33,13 @@ public class UsuarioController {
 
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
-        model.addAttribute("inicio", messageSource.getMessage("inicio", null, locale));
+
+        model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
+        model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
+        model.addAttribute("linkEquipos", messageSource.getMessage("linkEquipos", null, locale));
+        model.addAttribute("linkFamilia", messageSource.getMessage("linkFamilia", null, locale));
+        model.addAttribute("linkAlquiler", messageSource.getMessage("linkAlquiler", null, locale));
+        model.addAttribute("linkGraficas", messageSource.getMessage("linkGraficas", null, locale));
 
         model.addAttribute("usuario", principal.getName());
 
@@ -46,11 +52,9 @@ public class UsuarioController {
         roles.add(new Rol("ADMIN"));
         roles.add(new Rol("USER"));
 
-        Usuario usuario = usuarioServices.crearUsuario(new Usuario(1, "admin", true, "1234", roles));
+        usuarioServices.crearUsuario(new Usuario(1, "admin", true, "1234", roles));
 
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
-        model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
-        model.addAttribute("inicio", messageSource.getMessage("inicio", null, locale));
         model.addAttribute("tituloLogin", messageSource.getMessage("tituloLogin", null, locale));
         model.addAttribute("mensajeLogin", messageSource.getMessage("mensajeLogin", null, locale));
         model.addAttribute("placeholderUsuario", messageSource.getMessage("placeholderUsuario", null, locale));
@@ -69,6 +73,4 @@ public class UsuarioController {
 
         return "redirect:/";
     }
-
-
 }

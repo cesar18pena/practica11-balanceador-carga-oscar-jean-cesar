@@ -39,13 +39,28 @@
                         </button>
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/">${inicio}</a>
+                                <a class="nav-link" href="/"><i class="fas fa-home"></i> ${linkInicio}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/"><i class="fas fa-user-circle"></i> ${linkClientes}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/"><i class="fas fa-wrench"></i> ${linkEquipos}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/"><i class="fas fa-registered"></i> ${linkFamilia}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/"><i class="fas fa-file-invoice"></i> ${linkAlquiler}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/"><i class="fas fa-chart-line"></i> ${linkGraficas}</a>
                             </li>
                         </ul>
                         <strong class="avatar text-white">
                             <img src="https://i.imgur.com/rWS64lZ.gif" class="rounded-circle mr-2" alt="avatar">
                             <span class="mr-1">${usuario}</span>
-                            <form action="/logout" method="POST">
+                            <form action="/logout" method="POST" class="d-inline">
                                 <button type="submit" class="rounded-circle border-icon fas fa-power-off"></button>
                             </form>
                         </strong>
