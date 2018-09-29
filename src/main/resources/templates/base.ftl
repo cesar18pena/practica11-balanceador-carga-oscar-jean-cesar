@@ -45,16 +45,16 @@
                                 <a class="nav-link" href="/cliente/"><i class="fas fa-user-circle"></i> ${linkClientes}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/"><i class="fas fa-wrench"></i> ${linkEquipos}</a>
+                                <a class="nav-link" href="/equipo/"><i class="fas fa-wrench"></i> ${linkEquipos}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/"><i class="fas fa-registered"></i> ${linkFamilia}</a>
+                                <a class="nav-link" href="/familia/"><i class="fas fa-registered"></i> ${linkFamilia}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/"><i class="fas fa-file-invoice"></i> ${linkAlquiler}</a>
+                                <a class="nav-link" href="/alquiler/"><i class="fas fa-file-invoice"></i> ${linkAlquiler}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/"><i class="fas fa-chart-line"></i> ${linkGraficas}</a>
+                                <a class="nav-link" href="/graficas/"><i class="fas fa-chart-line"></i> ${linkGraficas}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/crear-usuario"><i class="fas fa-user"></i> ${linkUsuario}</a>
