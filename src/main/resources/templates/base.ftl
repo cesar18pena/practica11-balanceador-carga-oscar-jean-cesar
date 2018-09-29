@@ -42,7 +42,7 @@
                                 <a class="nav-link" href="/"><i class="fas fa-home"></i> ${linkInicio}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/"><i class="fas fa-user-circle"></i> ${linkClientes}</a>
+                                <a class="nav-link" href="/cliente/"><i class="fas fa-user-circle"></i> ${linkClientes}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/"><i class="fas fa-wrench"></i> ${linkEquipos}</a>

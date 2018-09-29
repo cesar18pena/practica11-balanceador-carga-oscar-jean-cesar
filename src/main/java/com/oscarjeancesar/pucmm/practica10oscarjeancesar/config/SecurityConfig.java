@@ -1,5 +1,7 @@
 package com.oscarjeancesar.pucmm.practica10oscarjeancesar.config;
 
+import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.FileSystemStorageService;
+import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.StorageService;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.UsuarioServices;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +23,6 @@ import javax.sql.DataSource;
 @Configurable
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private UserDetailsService userDetailsService;
 

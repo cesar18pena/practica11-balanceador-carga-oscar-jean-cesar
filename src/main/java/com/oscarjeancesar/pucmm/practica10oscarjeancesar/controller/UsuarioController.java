@@ -27,10 +27,6 @@ public class UsuarioController {
 
     @RequestMapping(value = "/")
     public String index(Model model, Locale locale, Principal principal) {
-        Set<Rol> roles = new HashSet<>();
-        roles.add(new Rol("ADMIN"));
-        roles.add(new Rol("USER"));
-
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
 
@@ -118,5 +114,7 @@ public class UsuarioController {
 
         return "redirect:/";
     }
+
+
 
 }
