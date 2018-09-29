@@ -40,6 +40,7 @@ public class UsuarioController {
         model.addAttribute("linkFamilia", messageSource.getMessage("linkFamilia", null, locale));
         model.addAttribute("linkAlquiler", messageSource.getMessage("linkAlquiler", null, locale));
         model.addAttribute("linkGraficas", messageSource.getMessage("linkGraficas", null, locale));
+        model.addAttribute("linkUsuario", messageSource.getMessage("linkUsuario", null, locale));
 
         model.addAttribute("usuario", principal.getName());
 
@@ -73,4 +74,49 @@ public class UsuarioController {
 
         return "redirect:/";
     }
+
+    @RequestMapping(value = "/crear-usuario", method = RequestMethod.GET)
+    public String crearUsuarioGET(Model model, Locale locale) {
+
+        model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
+        model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
+        model.addAttribute("linkEquipos", messageSource.getMessage("linkEquipos", null, locale));
+        model.addAttribute("linkFamilia", messageSource.getMessage("linkFamilia", null, locale));
+        model.addAttribute("linkAlquiler", messageSource.getMessage("linkAlquiler", null, locale));
+        model.addAttribute("linkGraficas", messageSource.getMessage("linkGraficas", null, locale));
+        model.addAttribute("linkUsuario", messageSource.getMessage("linkUsuario", null, locale));
+
+        model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
+        model.addAttribute("esAdmin", messageSource.getMessage("esAdmin", null, locale));
+        model.addAttribute("placeholderUsuario", messageSource.getMessage("placeholderUsuario", null, locale));
+        model.addAttribute("placerholderContrasena", messageSource.getMessage("placerholderContrasena", null, locale));
+
+        model.addAttribute("tituloCrearUsuario", messageSource.getMessage("tituloCrearUsuario", null, locale));
+        model.addAttribute("mensajeCrearUsuario", messageSource.getMessage("mensajeCrearUsuario", null, locale));
+        model.addAttribute("botonCrear", messageSource.getMessage("botonCrear", null, locale));
+
+        return "crearUsuario";
+    }
+
+    @RequestMapping(value = "/crear-usuario", method = RequestMethod.POST)
+    public String crearUsuarioPOST(
+            @RequestParam(value = "username", required = false) String username,
+            @RequestParam(value = "password", required = false) String password,
+            @RequestParam(value = "esAdmin", required = false) String esAdmin
+
+    ) {
+        boolean admin = esAdmin != null;
+        Set<Rol> roles = new HashSet<>();
+        roles.add(new Rol("USER"));
+
+        if (admin){
+            roles.add(new Rol("ADMIN"));
+        }
+
+        long idCount = usuarioServices.getIDCount();
+        usuarioServices.crearUsuario(new Usuario(idCount, username, admin, password, roles ));
+
+        return "redirect:/";
+    }
+
 }

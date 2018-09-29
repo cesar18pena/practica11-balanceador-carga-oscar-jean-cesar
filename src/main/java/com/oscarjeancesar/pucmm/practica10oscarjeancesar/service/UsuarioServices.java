@@ -76,6 +76,12 @@ public class UsuarioServices implements SecurityService{
         }
     }
 
+    public long getIDCount() {
+
+        return usuarioRepository.count() + 1;
+
+    }
+
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
         Usuario user = usuarioRepository.findByUsername(username);

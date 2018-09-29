@@ -56,6 +56,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/"><i class="fas fa-chart-line"></i> ${linkGraficas}</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/crear-usuario"><i class="fas fa-user"></i> ${linkUsuario}</a>
+                            </li>
                         </ul>
                         <strong class="avatar text-white">
                             <img src="https://i.imgur.com/rWS64lZ.gif" class="rounded-circle mr-2" alt="avatar">
