@@ -24,4 +24,12 @@ public class ClienteServices {
     public List<Cliente> getListadoDeClientes() {
         return clienteRepository.findAll();
     }
+
+    public void eliminarCliente(long id){
+        clienteRepository.delete(id);
+    }
+
+    public Cliente getClientePorID(long id){
+        return clienteRepository.findOne(id);
+    }
 }

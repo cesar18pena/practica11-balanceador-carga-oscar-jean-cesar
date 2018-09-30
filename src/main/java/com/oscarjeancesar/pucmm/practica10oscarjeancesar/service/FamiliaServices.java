@@ -25,4 +25,12 @@ public class FamiliaServices {
     public Familia buscarPorId(long id) {
         return familiaRepository.findById(id);
     }
+
+    public void eliminarFamilia(long id){
+        familiaRepository.delete(id);
+    }
+
+    public Familia getFamiliaPorID(long id){
+        return familiaRepository.findOne(id);
+    }
 }

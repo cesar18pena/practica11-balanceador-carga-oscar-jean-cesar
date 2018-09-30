@@ -15,19 +15,24 @@
             <h3>${tituloCrearEquipo}</h3>
             <h6>${mensajeCrearEquipo}</h6>
         </div>
-        <form id="agregarCliente" method="POST" action="/equipo/crear">
+        <form id="agregarCliente" method="POST" action="/equipo/modificar/${equipo.id}">
             <div class="form-group">
-                <input type="text" class="form-control" name="nombre" placeholder="${placeholderNombreEquipo}"
-                       required/>
+                <input type="text" class="form-control" name="id" value="${equipo.id}" required readonly/>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="nombre" value="${equipo.nombre}" required/>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">${placeholderFamiliaEquipo}</label>
                 </div>
                 <select class="custom-select" name="familia">
-                    <option value="0" selected></option>
                     <#list familias as familia>
-                        <option value="${familia.id}">${familia.nombre}</option>
+                        <#if equipo.familia.id == familia.id>
+                             <option value="${equipo.familia.id}" >${equipo.familia.nombre}</option>
+                        <#else>
+                            <option value="${familia.id}">${familia.nombre}</option>
+                        </#if>
                     </#list>
                 </select>
             </div>
@@ -36,27 +41,30 @@
                     <label class="input-group-text" for="inputGroupSelect01">${placeholderSubFamiliaEquipo}</label>
                 </div>
                 <select class="custom-select" name="subFamilia">
-                    <option value="0" selected></option>
                     <#list familias as familia>
                         <#if familia.subFamilia>
-                            <option value="${familia.id}">${familia.nombre}</option>
+                            <#if equipo.subFamilia.id == familia.id>
+                                <option value="${equipo.familia.id}" >${equipo.familia.nombre}</option>
+                            <#else>
+                                <option value="${familia.id}">${familia.nombre}</option>
+                            </#if>
                         </#if>
                     </#list>
                 </select>
             </div>
             <div class="form-group">
-                <input type="number" class="form-control" name="existencia" placeholder="${placeholderExistencia}"
+                <input type="number" class="form-control" name="existencia" value="${equipo.existencia}""
                        required/>
             </div>
             <div class="form-group">
-                <input type="number" class="form-control" name="costoPorDia" placeholder="${placeholderCostoPorDia}"
+                <input type="number" class="form-control" name="costoPorDia" value="${equipo.costoPorDia}"
                        required/>
             </div>
             <div class="custom-file">
-                <input type="file" class="custom-file-input" name="imagen" required>
+                <input type="file" class="custom-file-input" name="imagen" value="${equipo.imagen}" required>
                 <label class="custom-file-label" for="validatedCustomFile">${placeholderImagen}</label>
             </div>
-            <button type="submit" class="btn btn-primary mt-2">${botonCrear}</button>
+            <button type="submit" class="btn btn-primary mt-2">${acciones2}</button>
         </form>
     </main>
 </div>

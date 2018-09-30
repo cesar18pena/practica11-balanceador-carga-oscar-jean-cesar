@@ -21,4 +21,12 @@ public class EquipoServices {
     public List<Equipo> listadoEquipos() {
         return equipoRepository.findAll();
     }
+
+    public void eliminarEquipo(long id){
+        equipoRepository.delete(id);
+    }
+
+    public Equipo getEquipoPorID(long id){
+        return equipoRepository.findOne(id);
+    }
 }
