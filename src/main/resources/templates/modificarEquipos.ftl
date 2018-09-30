@@ -53,12 +53,10 @@
                 </select>
             </div>
             <div class="form-group">
-                <input type="number" class="form-control" name="existencia" value="${equipo.existencia}""
-                       required/>
+                <input type="number" class="form-control" name="existencia" value="${equipo.existencia?string['0']}" required/>
             </div>
             <div class="form-group">
-                <input type="number" class="form-control" name="costoPorDia" value="${equipo.costoPorDia}"
-                       required/>
+                <input type="number" class="form-control" name="costoPorDia" value="${equipo.costoPorDia?string['0']}" required/>
             </div>
             <div class="custom-file">
                 <input type="file" class="custom-file-input" name="imagen" value="${equipo.imagen}" required>

@@ -13,6 +13,8 @@ public class Alquiler implements Serializable {
 
     private Date fecha;
     private Date fechaEntrega;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Cliente cliente;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
