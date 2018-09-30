@@ -35,7 +35,9 @@
                 </div>
                 <select multiple class="custom-select" name="equipos">
                     <#list equipos as equipo>
-                        <option value="${equipo.id}">${equipo.nombre}</option>
+                        <#if equipo.existencia gt 0>
+                            <option value="${equipo.id}">${equipo.nombre} (${equipo.existencia})</option>
+                        </#if>
                     </#list>
                 </select>
             </div>

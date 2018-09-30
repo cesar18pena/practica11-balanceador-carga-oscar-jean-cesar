@@ -24,7 +24,7 @@
             <td>${alquiler.cliente.nombre}</td>
             <td>${alquiler.total}</td>
             <form method="POST" action="/alquiler/ver/${alquiler.id}">
-                <td><button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button></td>
+                <td><button type="submit" class="btn btn-primary"><i class="far fa-eye"></i></button></td>
             </form>
         </tr>
         </#list>
