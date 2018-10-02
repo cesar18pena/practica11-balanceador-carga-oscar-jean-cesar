@@ -26,7 +26,9 @@
                 </div>
                 <select class="custom-select" name="familia">
                     <#list familias as familia>
-                        <option value="${familia.id}">${familia.nombre}</option>
+                        <#if !familia.subFamilia>
+                            <option value="${familia.id}">${familia.nombre}</option>
+                        </#if>
                     </#list>
                 </select>
             </div>

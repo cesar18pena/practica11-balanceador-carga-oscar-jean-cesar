@@ -27,6 +27,7 @@ public class FamiliaController {
     public String index(Model model, Locale locale, Principal principal) {
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
 
         model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
         model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
@@ -58,6 +59,7 @@ public class FamiliaController {
     public String crearFamiliaGET(Model model, Locale locale, Principal principal) {
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
 
         model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
         model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
@@ -67,14 +69,12 @@ public class FamiliaController {
         model.addAttribute("linkGraficas", messageSource.getMessage("linkGraficas", null, locale));
         model.addAttribute("linkUsuario", messageSource.getMessage("linkUsuario", null, locale));
 
-
         model.addAttribute("placeholderNombreFamilia", messageSource.getMessage("placeholderNombreFamilia", null, locale));
         model.addAttribute("placeholderSubFamilia", messageSource.getMessage("placeholderSubFamilia", null, locale));
         model.addAttribute("botonCrear", messageSource.getMessage("botonCrear", null, locale));
 
         model.addAttribute("tituloCrearFamilia", messageSource.getMessage("tituloCrearFamilia", null, locale));
         model.addAttribute("mensajeCrearFamilia", messageSource.getMessage("mensajeCrearFamilia", null, locale));
-
 
         model.addAttribute("usuario", principal.getName());
 
@@ -103,9 +103,9 @@ public class FamiliaController {
 
     @RequestMapping(value = "/modificar-familia/{id}")
     public String modificarFamiliaGET(Model model, Locale locale, Principal principal, @PathVariable("id") long idFamilia) {
-
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
 
         model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
         model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
@@ -129,9 +129,7 @@ public class FamiliaController {
         model.addAttribute("tituloModificarFamilia", messageSource.getMessage("tituloModificarFamilia", null, locale));
         model.addAttribute("mensajeModificarFamilia", messageSource.getMessage("mensajeModificarFamilia", null, locale));
 
-
         model.addAttribute("acciones2", messageSource.getMessage("acciones2", null, locale));
-
 
         // Parámetros de la familia
         Familia familiaAModificar = familiaServices.getFamiliaPorID(idFamilia);
@@ -144,7 +142,6 @@ public class FamiliaController {
     public String modificarFamiliaPOST(@PathVariable("id") long id,
                                        @RequestParam(value = "nombre", required = false) String nombre,
                                        @RequestParam(value = "subFamilia", required = false) String subFamilia) {
-
         boolean esSubFamilia = subFamilia != null;
 
         Familia familia = familiaServices.getFamiliaPorID(id);

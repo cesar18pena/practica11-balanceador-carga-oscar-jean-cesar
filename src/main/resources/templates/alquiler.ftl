@@ -24,11 +24,11 @@
             <td>${alquiler.fechaEntrega?date}</td>
             <td>${alquiler.cliente.nombre}</td>
             <td>${alquiler.total}</td>
-            <form method="POST" action="/alquiler/ver/${alquiler.id}">
-                <td>
-                    <button type="submit" class="btn btn-primary"><i class="far fa-eye"></i></button>
-                </td>
-            </form>
+            <td>
+                <a class="btn btn-primary" href="/alquiler/ver/${alquiler.id}">
+                    <i class="far fa-eye"></i>
+                </a>
+            </td>
         </tr>
         </#list>
                  </tbody>

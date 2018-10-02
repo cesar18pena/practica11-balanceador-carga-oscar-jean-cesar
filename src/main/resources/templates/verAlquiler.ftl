@@ -7,12 +7,16 @@
         </h5>
     </div>
     <div class="card-body">
-        <div class="card card-primary">
-            <strong>ID: </strong>${alquiler.id}
-            <strong>${fechaCreacion}: </strong>${alquiler.fecha?date}
-            <strong>${fechaEntrega} </strong>${alquiler.fechaEntrega?date}
-            <strong>${clienteMensaje}: </strong>${alquiler.cliente.nombre}
-            <strong>${total}: </strong>${alquiler.total}
+        <div class="alert alert-secondary p-2">
+            <span><strong>ID: </strong> ${alquiler.id}</span>
+            &nbsp;|&nbsp;
+            <span><strong>${fechaCreacion}: </strong> ${alquiler.fecha?date}</span>
+            &nbsp;|&nbsp;
+            <span><strong>${fechaEntrega} </strong> ${alquiler.fechaEntrega?date}</span>
+            &nbsp;|&nbsp;
+            <span><strong>${clienteMensaje}: </strong> ${alquiler.cliente.nombre}</span>
+            &nbsp;|&nbsp;
+            <span><strong>${total}: </strong> ${alquiler.total}</span>
         </div>
         <table class="table table-hover table-responsive-sm">
             <caption>${equiposDelAlquiler}</caption>
@@ -42,7 +46,7 @@
                     <td>${equipo.existencia}</td>
                     <td>${equipo.costoPorDia}</td>
                     <td><img src="./${equipo.imagen}" alt="imagenequipo"></td>
-                    <form method="POST" action="/equipo/devolver/${equipo.id}">
+                    <form method="POST" action="/equipo/devolver/${equipo.id}/${alquiler.id}">
                         <td><button type="submit" class="btn btn-primary"><i class="fas fa-hand-holding-usd"></i></button></td>
                     </form>
                 </tr>

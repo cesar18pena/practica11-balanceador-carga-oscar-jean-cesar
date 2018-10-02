@@ -38,17 +38,17 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/"><i class="fas fa-home"></i> ${linkInicio}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/cliente/"><i class="fas fa-user-circle"></i> ${linkClientes}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/equipo/"><i class="fas fa-wrench"></i> ${linkEquipos}</a>
+                                <a class="nav-link" href="/familia/"><i class="fas fa-registered"></i> ${linkFamilia}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/familia/"><i class="fas fa-registered"></i> ${linkFamilia}</a>
+                                <a class="nav-link" href="/equipo/"><i class="fas fa-wrench"></i> ${linkEquipos}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/alquiler/"><i class="fas fa-file-invoice"></i> ${linkAlquiler}</a>
@@ -60,6 +60,9 @@
                                 <a class="nav-link" href="/crear-usuario"><i class="fas fa-user"></i> ${linkUsuario}</a>
                             </li>
                         </ul>
+                        <a class="btn btn-outline-light mr-2" href="/creador">
+                            <i class="fas fa-hdd"></i> ${creador}
+                        </a>
                         <strong class="avatar text-white">
                             <img src="https://i.imgur.com/rWS64lZ.gif" class="rounded-circle mr-2" alt="avatar">
                             <span class="mr-1">${usuario}</span>

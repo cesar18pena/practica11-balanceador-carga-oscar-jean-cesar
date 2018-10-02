@@ -1,5 +1,6 @@
 package com.oscarjeancesar.pucmm.practica10oscarjeancesar.controller;
 
+import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Alquiler;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Cliente;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Rol;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Usuario;
@@ -20,9 +21,11 @@ import java.util.*;
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
-
     @Autowired
     ClienteServices clienteServices;
+
+    @Autowired
+    AlquilerServices alquilerServices;
 
     @Autowired
     StorageService storageService;
@@ -32,9 +35,9 @@ public class ClienteController {
 
     @RequestMapping(value = "/")
     public String index(Model model, Locale locale, Principal principal) {
-
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
 
         model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
         model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
@@ -55,6 +58,8 @@ public class ClienteController {
         model.addAttribute("usuario", principal.getName());
         model.addAttribute("acciones", messageSource.getMessage("acciones", null, locale));
         model.addAttribute("acciones2", messageSource.getMessage("acciones2", null, locale));
+        model.addAttribute("ver", messageSource.getMessage("ver", null, locale));
+
         model.addAttribute("clientes", clienteServices.getListadoDeClientes());
 
         return "clientes";
@@ -62,9 +67,9 @@ public class ClienteController {
 
     @RequestMapping(value = "/crear")
     public String crearClienteGET(Model model, Locale locale, Principal principal) {
-
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
 
         model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
         model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
@@ -101,7 +106,7 @@ public class ClienteController {
     }
 
     @RequestMapping(value = "/eliminar-cliente/{id}", method = RequestMethod.POST)
-    public String eliminarClientePOST(@PathVariable("id") long id){
+    public String eliminarClientePOST(@PathVariable("id") long id) {
 
         clienteServices.eliminarCliente(id);
 
@@ -110,9 +115,9 @@ public class ClienteController {
 
     @RequestMapping(value = "/modificar-cliente/{id}")
     public String modificarClienteGET(Model model, Locale locale, Principal principal, @PathVariable("id") long idCliente) {
-
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
 
         model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
         model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
@@ -143,10 +148,10 @@ public class ClienteController {
 
     @RequestMapping(value = "/modificar/{id}", method = RequestMethod.POST)
     public String modificarClientePOST(@PathVariable("id") long id,
-       @RequestParam(value = "nombre", required = false) String nombre,
-       @RequestParam(value = "cedula", required = false) String cedula,
-       @RequestParam(value = "telefono", required = false) String telefono,
-       @RequestParam(value = "fotografia", required = false) String fotografia){
+                                       @RequestParam(value = "nombre", required = false) String nombre,
+                                       @RequestParam(value = "cedula", required = false) String cedula,
+                                       @RequestParam(value = "telefono", required = false) String telefono,
+                                       @RequestParam(value = "fotografia", required = false) String fotografia) {
 
         Cliente cliente = clienteServices.getClientePorID(id);
         cliente.setNombre(nombre);
@@ -158,5 +163,42 @@ public class ClienteController {
         return "redirect:/cliente/";
     }
 
+    @RequestMapping("/ver/{id}")
+    public String verClienteGET(Model model, Locale locale, Principal principal, @PathVariable("id") long id) {
+        model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
+        model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
 
+        model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
+        model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
+        model.addAttribute("linkEquipos", messageSource.getMessage("linkEquipos", null, locale));
+        model.addAttribute("linkFamilia", messageSource.getMessage("linkFamilia", null, locale));
+        model.addAttribute("linkAlquiler", messageSource.getMessage("linkAlquiler", null, locale));
+        model.addAttribute("linkGraficas", messageSource.getMessage("linkGraficas", null, locale));
+        model.addAttribute("linkUsuario", messageSource.getMessage("linkUsuario", null, locale));
+
+        model.addAttribute("fechaCreacion", messageSource.getMessage("fechaCreacion", null, locale));
+        model.addAttribute("fechaEntrega", messageSource.getMessage("fechaEntrega", null, locale));
+        model.addAttribute("clienteMensaje", messageSource.getMessage("clienteMensaje", null, locale));
+        model.addAttribute("total", messageSource.getMessage("total", null, locale));
+        model.addAttribute("ver", messageSource.getMessage("ver", null, locale));
+
+        model.addAttribute("placeholderNombreCliente", messageSource.getMessage("placeholderNombreCliente", null, locale));
+        model.addAttribute("placeholderCedula", messageSource.getMessage("placeholderCedula", null, locale));
+        model.addAttribute("placerholderTelefono", messageSource.getMessage("placerholderTelefono", null, locale));
+        model.addAttribute("placerholderFotografia", messageSource.getMessage("placerholderFotografia", null, locale));
+
+        model.addAttribute("usuario", principal.getName());
+
+        model.addAttribute("datosDelCliente", messageSource.getMessage("datosDelCliente", null, locale));
+        model.addAttribute("equiposDelCliente", messageSource.getMessage("equiposDelCliente", null, locale));
+
+        Cliente cliente = clienteServices.getClientePorID(id);
+
+        model.addAttribute("cliente", cliente);
+
+        model.addAttribute("alquileres", alquilerServices.historialAlquiler(cliente));
+
+        return "verCliente";
+    }
 }

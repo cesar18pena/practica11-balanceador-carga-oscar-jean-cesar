@@ -1,7 +1,9 @@
 package com.oscarjeancesar.pucmm.practica10oscarjeancesar.controller;
 
+import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Alquiler;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Equipo;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Familia;
+import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.AlquilerServices;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.EquipoServices;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.FamiliaServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("/equipo")
@@ -26,16 +31,19 @@ public class EquipoController {
     FamiliaServices familiaServices;
 
     @Autowired
+    AlquilerServices alquilerServices;
+
+    @Autowired
     private MessageSource messageSource;
 
     @RequestMapping("/")
     public String index(Model model, Locale locale, Principal principal) {
-
         boolean sizeFamilia = familiaServices.listadoFamilias().size() > 0;
         model.addAttribute("sizeFamilia", sizeFamilia);
 
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
 
         model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
         model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
@@ -55,6 +63,7 @@ public class EquipoController {
         model.addAttribute("placeholderImagen", messageSource.getMessage("placeholderImagen", null, locale));
 
         model.addAttribute("mensajeNoFamilias", messageSource.getMessage("mensajeNoFamilias", null, locale));
+        model.addAttribute("mensajeNoEquipos", messageSource.getMessage("mensajeNoEquipos", null, locale));
 
         model.addAttribute("acciones", messageSource.getMessage("acciones", null, locale));
         model.addAttribute("acciones2", messageSource.getMessage("acciones2", null, locale));
@@ -72,6 +81,7 @@ public class EquipoController {
     public String crearFamiliaGET(Model model, Locale locale, Principal principal) {
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
 
         model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
         model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
@@ -110,10 +120,10 @@ public class EquipoController {
         Familia familiaObject = null;
         Familia subFamiliaObject = null;
 
-        if(familia != 0){
-           familiaObject = familiaServices.buscarPorId(familia);
+        if (familia != 0) {
+            familiaObject = familiaServices.buscarPorId(familia);
         }
-        if(subFamilia != 0){
+        if (subFamilia != 0) {
             subFamiliaObject = familiaServices.buscarPorId(subFamilia);
         }
 
@@ -123,7 +133,7 @@ public class EquipoController {
     }
 
     @RequestMapping(value = "/eliminar-familia/{id}", method = RequestMethod.POST)
-    public String crearClientePOST(@PathVariable("id") long id){
+    public String crearClientePOST(@PathVariable("id") long id) {
 
         familiaServices.eliminarFamilia(id);
 
@@ -131,7 +141,7 @@ public class EquipoController {
     }
 
     @RequestMapping(value = "/eliminar-equipo/{id}", method = RequestMethod.POST)
-    public String eliminarEquipoPOST(@PathVariable("id") long id){
+    public String eliminarEquipoPOST(@PathVariable("id") long id) {
 
         equipoServices.eliminarEquipo(id);
 
@@ -140,9 +150,9 @@ public class EquipoController {
 
     @RequestMapping(value = "/modificar-equipo/{id}")
     public String modificarEquipoGET(Model model, Locale locale, Principal principal, @PathVariable("id") long idEquipo) {
-
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
 
         model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
         model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
@@ -185,13 +195,12 @@ public class EquipoController {
 
     @RequestMapping(value = "/modificar/{id}", method = RequestMethod.POST)
     public String modificarEquipoPOST(@PathVariable("id") long id,
-      @RequestParam(value = "nombre", required = false) String nombre,
-      @RequestParam(value = "familia", required = false) long familia,
-      @RequestParam(value = "subFamilia", required = false) long subFamilia,
-      @RequestParam(value = "existencia", required = false) long existencia,
-      @RequestParam(value = "costoPorDia", required = false) long costoPorDia,
-      @RequestParam(value = "imagen", required = false) String imagen){
-
+                                      @RequestParam(value = "nombre", required = false) String nombre,
+                                      @RequestParam(value = "familia", required = false) long familia,
+                                      @RequestParam(value = "subFamilia", required = false) long subFamilia,
+                                      @RequestParam(value = "existencia", required = false) long existencia,
+                                      @RequestParam(value = "costoPorDia", required = false) long costoPorDia,
+                                      @RequestParam(value = "imagen", required = false) String imagen) {
         Familia familiaObject = familiaServices.buscarPorId(familia);
         Familia subFamiliaObject = familiaServices.buscarPorId(subFamilia);
 
@@ -205,5 +214,26 @@ public class EquipoController {
         equipoServices.crearEquipo(equipo);
 
         return "redirect:/equipo/";
+    }
+
+    @RequestMapping(value = "/devolver/{id}/{alquilerId}", method = RequestMethod.POST)
+    public String devolverEquipoPOST(@PathVariable("id") long id, @PathVariable("alquilerId") long alquilerId) {
+        Equipo equipo = equipoServices.getEquipoPorID(id);
+        Alquiler alquiler = alquilerServices.getAlquilerPorID(alquilerId);
+
+        equipo.setExistencia(equipo.getExistencia() + 1);
+
+        equipoServices.crearEquipo(equipo);
+
+        long resta = new Date().getTime() - alquiler.getFecha().getTime();
+        long diff = TimeUnit.DAYS.convert(resta, TimeUnit.MILLISECONDS);
+
+        alquiler.setTotal(alquiler.getTotal() + (diff * equipo.getCostoPorDia()));
+
+        alquiler.getEquipos().remove(equipo);
+
+        alquilerServices.crearAlquiler(alquiler);
+
+        return "redirect:/alquiler/ver/" + alquilerId;
     }
 }

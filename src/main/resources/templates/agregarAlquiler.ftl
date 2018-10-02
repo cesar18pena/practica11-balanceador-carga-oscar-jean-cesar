@@ -36,7 +36,7 @@
                 <select multiple class="custom-select" name="equipos">
                     <#list equipos as equipo>
                         <#if equipo.existencia gt 0>
-                            <option value="${equipo.id}">${equipo.nombre} (${equipo.existencia})</option>
+                            <option value="${equipo.id}">${equipo.nombre} (${equipo.existencia}) - $${equipo.costoPorDia}/${dia}</option>
                         </#if>
                     </#list>
                 </select>

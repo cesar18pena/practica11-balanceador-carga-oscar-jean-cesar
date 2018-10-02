@@ -5,21 +5,22 @@
         <#if sizeFamilia>
             <a class="btn btn-primary mb-2" href="/equipo/crear"><i
                     class="fas fa-plus"></i> ${botonCrear} ${linkEquipos}</a>
-            <table class="table table-hover table-responsive-sm">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>${placeholderNombreEquipo}</th>
-                    <th>${placeholderFamiliaEquipo}</th>
-                    <th>${placeholderSubFamiliaEquipo}</th>
-                    <th>${placeholderExistencia}</th>
-                    <th>${placeholderCostoPorDia}</th>
-                    <th>${placeholderImagen}</th>
-                    <th>${acciones}</th>
-                    <th>${acciones2}</th>
-                </tr>
-                </thead>
-                <tbody>
+            <#if equipos?size gt 0>
+                <table class="table table-hover table-responsive-sm">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>${placeholderNombreEquipo}</th>
+                        <th>${placeholderFamiliaEquipo}</th>
+                        <th>${placeholderSubFamiliaEquipo}</th>
+                        <th>${placeholderExistencia}</th>
+                        <th>${placeholderCostoPorDia}</th>
+                        <th>${placeholderImagen}</th>
+                        <th>${acciones}</th>
+                        <th>${acciones2}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
         <#list equipos as equipo>
         <tr>
             <td>${equipo.id}</td>
@@ -45,8 +46,13 @@
             </form>
         </tr>
         </#list>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            <#else>
+                <div class="alert alert-primary">
+                    ${mensajeNoEquipos}
+                </div>
+            </#if>
         <#else>
             <div class="alert alert-primary">
                 ${mensajeNoFamilias}
