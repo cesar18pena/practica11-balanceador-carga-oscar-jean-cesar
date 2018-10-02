@@ -25,7 +25,6 @@
                     <label class="input-group-text" for="inputGroupSelect01">${placeholderFamiliaEquipo}</label>
                 </div>
                 <select class="custom-select" name="familia">
-                    <option value="0" selected></option>
                     <#list familias as familia>
                         <option value="${familia.id}">${familia.nombre}</option>
                     </#list>
@@ -36,7 +35,6 @@
                     <label class="input-group-text" for="inputGroupSelect01">${placeholderSubFamiliaEquipo}</label>
                 </div>
                 <select class="custom-select" name="subFamilia">
-                    <option value="0" selected></option>
                     <#list familias as familia>
                         <#if familia.subFamilia>
                             <option value="${familia.id}">${familia.nombre}</option>

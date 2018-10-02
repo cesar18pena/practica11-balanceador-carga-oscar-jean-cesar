@@ -63,6 +63,8 @@ public class AlquilerController {
         model.addAttribute("total", messageSource.getMessage("total", null, locale));
         model.addAttribute("ver", messageSource.getMessage("ver", null, locale));
 
+        model.addAttribute("mensajeNoAlquileres", messageSource.getMessage("mensajeNoAlquileres", null, locale));
+
         model.addAttribute("botonCrear", messageSource.getMessage("botonCrear", null, locale));
         model.addAttribute("usuario", principal.getName());
         model.addAttribute("alquileres", alquilerServices.listadoAlquiler());
@@ -100,6 +102,9 @@ public class AlquilerController {
 
         model.addAttribute("usuario", principal.getName());
         model.addAttribute("alquileres", alquilerServices.listadoAlquiler());
+
+        model.addAttribute("datosDelAlquiler", messageSource.getMessage("datosDelAlquiler", null, locale));
+        model.addAttribute("equiposDelAlquiler", messageSource.getMessage("equiposDelAlquiler", null, locale));
 
         Alquiler alquiler = alquilerServices.getAlquilerPorID(id);
         model.addAttribute("alquiler", alquiler);

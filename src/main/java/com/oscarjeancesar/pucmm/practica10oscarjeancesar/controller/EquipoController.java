@@ -54,6 +54,8 @@ public class EquipoController {
         model.addAttribute("placeholderCostoPorDia", messageSource.getMessage("placeholderCostoPorDia", null, locale));
         model.addAttribute("placeholderImagen", messageSource.getMessage("placeholderImagen", null, locale));
 
+        model.addAttribute("mensajeNoFamilias", messageSource.getMessage("mensajeNoFamilias", null, locale));
+
         model.addAttribute("acciones", messageSource.getMessage("acciones", null, locale));
         model.addAttribute("acciones2", messageSource.getMessage("acciones2", null, locale));
 

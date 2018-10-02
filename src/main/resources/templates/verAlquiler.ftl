@@ -1,6 +1,11 @@
 <#import "base.ftl" as base>
 <@base.pagina logueado=estaLogueado usuario=usuario>
 <div class="card mt-3">
+    <div class="card-header">
+        <h5 class="card-title">
+            ${datosDelAlquiler}
+        </h5>
+    </div>
     <div class="card-body">
         <div class="card card-primary">
             <strong>ID: </strong>${alquiler.id}
@@ -10,6 +15,7 @@
             <strong>${total}: </strong>${alquiler.total}
         </div>
         <table class="table table-hover table-responsive-sm">
+            <caption>${equiposDelAlquiler}</caption>
             <thead>
             <tr>
                 <th>ID</th>

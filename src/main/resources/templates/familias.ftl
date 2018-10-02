@@ -2,7 +2,9 @@
 <@base.pagina logueado=estaLogueado usuario=usuario>
 <div class="card mt-3">
     <div class="card-body">
-        <a class="btn btn-primary mb-2" href="/familia/crear"><i class="fas fa-plus"></i> ${botonCrear} ${linkFamilia}</a>
+        <a class="btn btn-primary mb-2" href="/familia/crear"><i class="fas fa-plus"></i> ${botonCrear} ${linkFamilia}
+        </a>
+        <#if familias?size gt 0>
         <table class="table table-hover table-responsive-sm">
             <thead>
             <tr>
@@ -20,15 +22,24 @@
             <td>${familia.nombre}</td>
             <td>${familia.subFamilia?string('${mensajeSi}', '${mensajeNo}')}</td>
             <form method="POST" action="/familia/eliminar-familia/${familia.id}">
-                <td><button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button></td>
+                <td>
+                    <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                </td>
             </form>
             <form method="POST" action="/familia/modificar-familia/${familia.id}">
-                <td><button type="submit" class="btn btn-success"><i class="far fa-edit"></i></button></td>
+                <td>
+                    <button type="submit" class="btn btn-success"><i class="far fa-edit"></i></button>
+                </td>
             </form>
         </tr>
         </#list>
             </tbody>
         </table>
+        <#else>
+            <div class="alert alert-primary">
+                ${mensajeNoFamilias}
+            </div>
+        </#if>
     </div>
 </div>
 </@base.pagina>

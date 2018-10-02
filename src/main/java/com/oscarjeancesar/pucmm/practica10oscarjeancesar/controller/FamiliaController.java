@@ -40,6 +40,8 @@ public class FamiliaController {
         model.addAttribute("placeholderSubFamilia", messageSource.getMessage("placeholderSubFamilia", null, locale));
         model.addAttribute("botonCrear", messageSource.getMessage("botonCrear", null, locale));
 
+        model.addAttribute("mensajeNoFamilias", messageSource.getMessage("mensajeNoFamilias", null, locale));
+
         model.addAttribute("mensajeSi", messageSource.getMessage("mensajeSi", null, locale));
         model.addAttribute("mensajeNo", messageSource.getMessage("mensajeNo", null, locale));
 
@@ -92,7 +94,7 @@ public class FamiliaController {
     }
 
     @RequestMapping(value = "/eliminar-familia/{id}", method = RequestMethod.POST)
-    public String eliminarFamiliaPOST(@PathVariable("id") long id){
+    public String eliminarFamiliaPOST(@PathVariable("id") long id) {
 
         familiaServices.eliminarFamilia(id);
 
@@ -128,7 +130,6 @@ public class FamiliaController {
         model.addAttribute("mensajeModificarFamilia", messageSource.getMessage("mensajeModificarFamilia", null, locale));
 
 
-
         model.addAttribute("acciones2", messageSource.getMessage("acciones2", null, locale));
 
 
@@ -142,7 +143,7 @@ public class FamiliaController {
     @RequestMapping(value = "/modificar/{id}", method = RequestMethod.POST)
     public String modificarFamiliaPOST(@PathVariable("id") long id,
                                        @RequestParam(value = "nombre", required = false) String nombre,
-                                       @RequestParam(value = "subFamilia", required = false) String subFamilia){
+                                       @RequestParam(value = "subFamilia", required = false) String subFamilia) {
 
         boolean esSubFamilia = subFamilia != null;
 

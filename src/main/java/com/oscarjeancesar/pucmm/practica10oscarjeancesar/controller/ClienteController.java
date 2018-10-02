@@ -50,6 +50,8 @@ public class ClienteController {
         model.addAttribute("placerholderFotografia", messageSource.getMessage("placerholderFotografia", null, locale));
         model.addAttribute("botonCrear", messageSource.getMessage("botonCrear", null, locale));
 
+        model.addAttribute("mensajeNoClientes", messageSource.getMessage("mensajeNoClientes", null, locale));
+
         model.addAttribute("usuario", principal.getName());
         model.addAttribute("acciones", messageSource.getMessage("acciones", null, locale));
         model.addAttribute("acciones2", messageSource.getMessage("acciones2", null, locale));
