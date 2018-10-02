@@ -18,21 +18,22 @@
             &nbsp;|&nbsp;
             <span><strong>${total}: </strong> ${alquiler.total}</span>
         </div>
-        <table class="table table-hover table-responsive-sm">
-            <caption>${equiposDelAlquiler}</caption>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>${placeholderNombreEquipo}</th>
-                <th>${placeholderFamiliaEquipo}</th>
-                <th>${placeholderSubFamiliaEquipo}</th>
-                <th>${placeholderExistencia}</th>
-                <th>${placeholderCostoPorDia}</th>
-                <th>${placeholderImagen}</th>
-                <th>${devolver}</th>
-            </tr>
-            </thead>
-            <tbody>
+        <#if equiposAlquiler?size gt 0>
+            <table class="table table-hover table-responsive-sm">
+                <caption>${equiposDelAlquiler}</caption>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>${placeholderNombreEquipo}</th>
+                    <th>${placeholderFamiliaEquipo}</th>
+                    <th>${placeholderSubFamiliaEquipo}</th>
+                    <th>${placeholderExistencia}</th>
+                    <th>${placeholderCostoPorDia}</th>
+                    <th>${placeholderImagen}</th>
+                    <th>${devolver}</th>
+                </tr>
+                </thead>
+                <tbody>
 				<#list equiposAlquiler as equipo>
                 <tr>
                     <td>${equipo.id}</td>
@@ -51,8 +52,14 @@
                     </form>
                 </tr>
                 </#list>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+            <#else>
+            <div class="alert alert-primary">
+                ${equiposDevueltos}
+            </div>
+
+        </#if>
     </div>
 </div>
 </@base.pagina>

@@ -151,4 +151,37 @@ public class FamiliaController {
 
         return "redirect:/familia/";
     }
+
+    @RequestMapping(value = "/graficas")
+    public String verGraficasGET(Model model, Locale locale, Principal principal) {
+        model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
+        model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
+        model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
+
+        model.addAttribute("linkInicio", messageSource.getMessage("linkInicio", null, locale));
+        model.addAttribute("linkClientes", messageSource.getMessage("linkClientes", null, locale));
+        model.addAttribute("linkEquipos", messageSource.getMessage("linkEquipos", null, locale));
+        model.addAttribute("linkFamilia", messageSource.getMessage("linkFamilia", null, locale));
+        model.addAttribute("linkAlquiler", messageSource.getMessage("linkAlquiler", null, locale));
+        model.addAttribute("linkGraficas", messageSource.getMessage("linkGraficas", null, locale));
+        model.addAttribute("linkUsuario", messageSource.getMessage("linkUsuario", null, locale));
+
+        model.addAttribute("placeholderNombreFamilia", messageSource.getMessage("placeholderNombreFamilia", null, locale));
+        model.addAttribute("placeholderSubFamilia", messageSource.getMessage("placeholderSubFamilia", null, locale));
+        model.addAttribute("botonCrear", messageSource.getMessage("botonCrear", null, locale));
+
+        model.addAttribute("mensajeSi", messageSource.getMessage("mensajeSi", null, locale));
+        model.addAttribute("mensajeNo", messageSource.getMessage("mensajeNo", null, locale));
+
+        model.addAttribute("usuario", principal.getName());
+        model.addAttribute("acciones", messageSource.getMessage("acciones", null, locale));
+
+        model.addAttribute("familias", familiaServices.listadoFamilias());
+        model.addAttribute("tituloModificarFamilia", messageSource.getMessage("tituloModificarFamilia", null, locale));
+        model.addAttribute("mensajeModificarFamilia", messageSource.getMessage("mensajeModificarFamilia", null, locale));
+
+        model.addAttribute("acciones2", messageSource.getMessage("acciones2", null, locale));
+
+        return "graficas";
+    }
 }

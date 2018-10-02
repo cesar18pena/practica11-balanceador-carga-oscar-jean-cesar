@@ -54,7 +54,7 @@
                                 <a class="nav-link" href="/alquiler/"><i class="fas fa-file-invoice"></i> ${linkAlquiler}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/graficas/"><i class="fas fa-chart-line"></i> ${linkGraficas}</a>
+                                <a class="nav-link" href="/familia/graficas/"><i class="fas fa-chart-line"></i> ${linkGraficas}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/crear-usuario"><i class="fas fa-user"></i> ${linkUsuario}</a>

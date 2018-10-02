@@ -2,6 +2,8 @@ package com.oscarjeancesar.pucmm.practica10oscarjeancesar.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Familia implements Serializable {
@@ -12,12 +14,36 @@ public class Familia implements Serializable {
     private String nombre;
     private boolean subFamilia;
 
+    @ElementCollection
+    private List<Long> diasAlquilados;
+
     public Familia() {
     }
 
     public Familia(String nombre, boolean subFamilia) {
         this.nombre = nombre;
         this.subFamilia = subFamilia;
+        this.diasAlquilados = new ArrayList<>();
+    }
+
+    public long getPromedio(){
+        if(this.diasAlquilados.size() == 0){
+            return 0;
+        }
+
+        long suma = 0;
+        for(long dias: this.diasAlquilados){
+            suma += dias;
+        }
+        return suma/this.diasAlquilados.size();
+    }
+
+    public List<Long> getDiasAlquilados() {
+        return diasAlquilados;
+    }
+
+    public void setDiasAlquilados(List<Long> diasAlquilados) {
+        this.diasAlquilados = diasAlquilados;
     }
 
     public long getId() {

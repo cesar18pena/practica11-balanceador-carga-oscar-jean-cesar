@@ -109,6 +109,8 @@ public class AlquilerController {
         model.addAttribute("alquiler", alquiler);
         model.addAttribute("equiposAlquiler", alquiler.getEquipos());
 
+        model.addAttribute("equiposDevueltos", messageSource.getMessage("equiposDevueltos", null, locale));
+
         return "verAlquiler";
     }
 

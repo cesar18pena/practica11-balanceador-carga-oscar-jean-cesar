@@ -228,6 +228,15 @@ public class EquipoController {
         long resta = new Date().getTime() - alquiler.getFecha().getTime();
         long diff = TimeUnit.DAYS.convert(resta, TimeUnit.MILLISECONDS);
 
+        Familia familia = equipo.getFamilia();
+        Familia subfamilia = equipo.getSubFamilia();
+
+        familia.getDiasAlquilados().add(diff);
+        subfamilia.getDiasAlquilados().add(diff);
+
+        familiaServices.crearFamilia(familia);
+        familiaServices.crearFamilia(subfamilia);
+
         alquiler.setTotal(alquiler.getTotal() + (diff * equipo.getCostoPorDia()));
 
         alquiler.getEquipos().remove(equipo);
