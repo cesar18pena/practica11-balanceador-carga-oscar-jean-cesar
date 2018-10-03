@@ -39,6 +39,7 @@ public class FamiliaController {
 
         model.addAttribute("placeholderNombreFamilia", messageSource.getMessage("placeholderNombreFamilia", null, locale));
         model.addAttribute("placeholderSubFamilia", messageSource.getMessage("placeholderSubFamilia", null, locale));
+        model.addAttribute("placeholderFamiliaPadre", messageSource.getMessage("placeholderFamiliaPadre", null, locale));
         model.addAttribute("botonCrear", messageSource.getMessage("botonCrear", null, locale));
 
         model.addAttribute("mensajeNoFamilias", messageSource.getMessage("mensajeNoFamilias", null, locale));
@@ -75,6 +76,9 @@ public class FamiliaController {
 
         model.addAttribute("tituloCrearFamilia", messageSource.getMessage("tituloCrearFamilia", null, locale));
         model.addAttribute("mensajeCrearFamilia", messageSource.getMessage("mensajeCrearFamilia", null, locale));
+        model.addAttribute("placeholderFamiliaPadre", messageSource.getMessage("placeholderFamiliaPadre", null, locale));
+
+        model.addAttribute("familias", familiaServices.listadoFamilias());
 
         model.addAttribute("usuario", principal.getName());
 
@@ -84,11 +88,19 @@ public class FamiliaController {
     @RequestMapping(value = "/crear", method = RequestMethod.POST)
     public String crearFamiliaPOST(
             @RequestParam(value = "nombre", required = false) String nombre,
-            @RequestParam(value = "subFamilia", required = false) String subFamilia) {
+            @RequestParam(value = "subFamilia", required = false) String subFamilia,
+            @RequestParam(value = "familiaPadre", required = false) Long familiaPadre) {
 
         boolean esSubFamilia = subFamilia != null;
 
-        familiaServices.crearFamilia(new Familia(nombre, esSubFamilia));
+        if(esSubFamilia) {
+            Familia familiaPadreObj = familiaServices.buscarPorId(familiaPadre);
+            familiaServices.crearFamilia(new Familia(nombre, esSubFamilia, familiaPadreObj));
+        } else {
+            familiaServices.crearFamilia(new Familia(nombre, esSubFamilia));
+        }
+
+
 
         return "redirect:/familia/";
     }
@@ -141,7 +153,8 @@ public class FamiliaController {
     @RequestMapping(value = "/modificar/{id}", method = RequestMethod.POST)
     public String modificarFamiliaPOST(@PathVariable("id") long id,
                                        @RequestParam(value = "nombre", required = false) String nombre,
-                                       @RequestParam(value = "subFamilia", required = false) String subFamilia) {
+                                       @RequestParam(value = "subFamilia", required = false) String subFamilia
+    ) {
         boolean esSubFamilia = subFamilia != null;
 
         Familia familia = familiaServices.getFamiliaPorID(id);

@@ -16,7 +16,7 @@
                     <th>${acciones}</th>
                     <th>${acciones2}</th>
                     <th>${ver}</th>
-                    <th>Subir Foto</th>
+                    <th>${subirFoto}</th>
                 </tr>
                 </thead>
                 <tbody>

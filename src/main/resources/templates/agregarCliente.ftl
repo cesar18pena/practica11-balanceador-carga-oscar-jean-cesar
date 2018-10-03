@@ -28,10 +28,6 @@
                 <input type="text" class="form-control" name="telefono" placeholder="${placerholderTelefono}"
                        required />
             </div>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" name="fotografia">
-                <label class="custom-file-label" for="validatedCustomFile">${placerholderFotografia}</label>
-            </div>
             <button type="submit" class="btn btn-primary mt-2">${botonCrear}</button>
         </form>
     </main>

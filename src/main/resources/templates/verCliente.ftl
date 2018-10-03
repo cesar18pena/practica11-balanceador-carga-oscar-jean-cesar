@@ -8,13 +8,12 @@
     </div>
     <div class="card-body">
         <div class="alert alert-secondary p-2">
+            <img class="rounded-circle" src="/img/${cliente.fotografia}" alt="fotocliente" width="100px">
             <span><strong>ID: </strong> ${cliente.id}</span>
-            &nbsp;|&nbsp;
-            <img src="./${cliente.fotografia}" alt="fotocliente" width="20px">
             &nbsp;|&nbsp;
             <span><strong>${placeholderNombreCliente}: </strong> ${cliente.nombre}</span>
             &nbsp;|&nbsp;
-            <span><strong>${placeholderCedula} </strong> ${cliente.cedula}</span>
+            <span><strong>${placeholderCedula}: </strong> ${cliente.cedula}</span>
             &nbsp;|&nbsp;
             <span><strong>${placerholderTelefono}: </strong> ${cliente.telefono}</span>
         </div>

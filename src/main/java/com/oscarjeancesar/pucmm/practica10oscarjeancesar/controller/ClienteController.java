@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,7 +35,7 @@ public class ClienteController {
     @Autowired
     private MessageSource messageSource;
 
-    private static String UPLOADED_FOLDER = "//Users//cesarpena//Desktop//practica10-springboot-electronica-oscar-jean-cesar//src//main//resources//static//img//";
+    private static String UPLOADED_FOLDER = new File("src/main/resources/static/img").getAbsolutePath();
 
     @RequestMapping(value = "/subir-foto/{id}", method = RequestMethod.POST)
     public String crearFotoPOST(@PathVariable("id") long id, @RequestParam(value = "file", required = false) MultipartFile file) {
@@ -43,7 +44,7 @@ public class ClienteController {
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
             System.out.println(bytes);
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Path path = Paths.get(UPLOADED_FOLDER + "/" + file.getOriginalFilename());
             Files.write(path, bytes);
 
             Cliente cliente = clienteServices.getClientePorID(id);
@@ -87,6 +88,8 @@ public class ClienteController {
 
         model.addAttribute("clientes", clienteServices.getListadoDeClientes());
 
+        model.addAttribute("subirFoto", messageSource.getMessage("subirFoto", null, locale));
+
         return "clientes";
     }
 
@@ -122,10 +125,9 @@ public class ClienteController {
     public String crearClientePOST(
             @RequestParam(value = "nombre", required = false) String nombre,
             @RequestParam(value = "cedula", required = false) String cedula,
-            @RequestParam(value = "telefono", required = false) String telefono,
-            @RequestParam(value = "fotografia", required = false) String fotografia) {
+            @RequestParam(value = "telefono", required = false) String telefono) {
 
-        clienteServices.crearCliente(new Cliente(nombre, cedula, telefono, fotografia));
+        clienteServices.crearCliente(new Cliente(nombre, cedula, telefono, ""));
 
         return "redirect:/cliente/";
     }
@@ -175,14 +177,13 @@ public class ClienteController {
     public String modificarClientePOST(@PathVariable("id") long id,
                                        @RequestParam(value = "nombre", required = false) String nombre,
                                        @RequestParam(value = "cedula", required = false) String cedula,
-                                       @RequestParam(value = "telefono", required = false) String telefono,
-                                       @RequestParam(value = "fotografia", required = false) String fotografia) {
+                                       @RequestParam(value = "telefono", required = false) String telefono) {
 
         Cliente cliente = clienteServices.getClientePorID(id);
         cliente.setNombre(nombre);
         cliente.setCedula(cedula);
         cliente.setTelefono(telefono);
-        cliente.setFotografia(fotografia);
+        cliente.setFotografia(cliente.getFotografia());
         clienteServices.crearCliente(cliente);
 
         return "redirect:/cliente/";

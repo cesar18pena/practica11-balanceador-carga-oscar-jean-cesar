@@ -58,10 +58,6 @@
             <div class="form-group">
                 <input type="number" class="form-control" name="costoPorDia" value="${equipo.costoPorDia?string['0']}" required/>
             </div>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" name="imagen" value="${equipo.imagen}" required>
-                <label class="custom-file-label" for="validatedCustomFile">${placeholderImagen}</label>
-            </div>
             <button type="submit" class="btn btn-primary mt-2">${acciones2}</button>
         </form>
     </main>

@@ -133,13 +133,14 @@ public class UsuarioController {
         clienteServices.crearCliente(new Cliente("Oscar", "402-2577899-8", "809-850-4137", ""));
 
         Familia familia1 = familiaServices.crearFamilia(new Familia("Yamaha", false));
-        Familia familia2 = familiaServices.crearFamilia(new Familia("Whirlpool", true));
         Familia familia3 = familiaServices.crearFamilia(new Familia("Mazda", false));
-        Familia familia4 = familiaServices.crearFamilia(new Familia("Honda", true));
 
-        equipoServices.crearEquipo(new Equipo("MT-03", familia1, familia2, 1, 1000, "fotoequipo1.png"));
-        equipoServices.crearEquipo(new Equipo("Fit", familia3, familia4, 3, 2000, "fotoequipo2.png"));
-        equipoServices.crearEquipo(new Equipo("WRM32BKTWW", familia1, familia2, 5, 3000, "fotoequipo3.png"));
+        Familia familia2 = familiaServices.crearFamilia(new Familia("Whirlpool", true, familia1));
+        Familia familia4 = familiaServices.crearFamilia(new Familia("Honda", true, familia3));
+
+        equipoServices.crearEquipo(new Equipo("MT-03", familia1, familia2, 1, 1000, ""));
+        equipoServices.crearEquipo(new Equipo("Fit", familia3, familia4, 3, 2000, ""));
+        equipoServices.crearEquipo(new Equipo("WRM32BKTWW", familia1, familia2, 5, 3000, ""));
 
         return "redirect:/";
     }

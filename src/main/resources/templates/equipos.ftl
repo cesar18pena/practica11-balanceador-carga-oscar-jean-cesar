@@ -10,15 +10,15 @@
                     <thead>
                     <tr>
                         <th>ID</th>
+                        <th>${placeholderImagen}</th>
                         <th>${placeholderNombreEquipo}</th>
                         <th>${placeholderFamiliaEquipo}</th>
                         <th>${placeholderSubFamiliaEquipo}</th>
                         <th>${placeholderExistencia}</th>
                         <th>${placeholderCostoPorDia}</th>
-                        <th>${placeholderImagen}</th>
                         <th>${acciones}</th>
                         <th>${acciones2}</th>
-                        <th>Subir Foto</th>
+                        <th>${subirFoto}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -26,6 +26,7 @@
         <#list equipos as equipo>
         <tr>
             <td>${equipo.id}</td>
+            <td><img class="rounded-circle" src="/img/${equipo.imagen}" alt="imagenequipo" height="48px" width="48px"></td>
             <td>${equipo.nombre}</td>
             <#if equipo.familia??>
                 <td>${equipo.familia.nombre}</td>
@@ -35,7 +36,6 @@
             </#if>
             <td>${equipo.existencia}</td>
             <td>${equipo.costoPorDia}</td>
-            <td><img class="rounded-circle" src="/img/${equipo.imagen}" alt="imagenequipo" height="48px" width="48px"></td>
             <form method="POST" action="/equipo/eliminar-equipo/${equipo.id}">
                 <td>
                     <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>

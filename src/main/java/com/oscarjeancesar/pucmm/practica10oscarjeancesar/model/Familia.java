@@ -14,6 +14,9 @@ public class Familia implements Serializable {
     private String nombre;
     private boolean subFamilia;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private Familia familiaPadre;
+
     @ElementCollection
     private List<Long> diasAlquilados;
 
@@ -24,6 +27,15 @@ public class Familia implements Serializable {
         this.nombre = nombre;
         this.subFamilia = subFamilia;
         this.diasAlquilados = new ArrayList<>();
+    }
+
+    public Familia(String nombre, boolean subFamilia, Familia familiaPadre) {
+        this.nombre = nombre;
+        this.subFamilia = subFamilia;
+
+        if (subFamilia) {
+            this.familiaPadre = familiaPadre;
+        }
     }
 
     public long getPromedio(){
@@ -68,5 +80,13 @@ public class Familia implements Serializable {
 
     public void setSubFamilia(boolean subFamilia) {
         this.subFamilia = subFamilia;
+    }
+
+    public Familia getFamiliaPadre() {
+        return familiaPadre;
+    }
+
+    public void setFamiliaPadre(Familia familiaPadre) {
+        this.familiaPadre = familiaPadre;
     }
 }

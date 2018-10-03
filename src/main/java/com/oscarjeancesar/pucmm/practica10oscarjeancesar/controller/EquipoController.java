@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,8 +39,7 @@ public class EquipoController {
 
     @Autowired
     private MessageSource messageSource;
-
-    private static String UPLOADED_FOLDER = "//Users//cesarpena//Desktop//practica10-springboot-electronica-oscar-jean-cesar//src//main//resources//static//img//";
+    private static String UPLOADED_FOLDER = new File("src/main/resources/static/img").getAbsolutePath();
 
     @RequestMapping("/")
     public String index(Model model, Locale locale, Principal principal) {
@@ -78,6 +78,8 @@ public class EquipoController {
         model.addAttribute("usuario", principal.getName());
 
         model.addAttribute("equipos", equipoServices.listadoEquipos());
+
+        model.addAttribute("subirFoto", messageSource.getMessage("subirFoto", null, locale));
 
         return "equipos";
     }
@@ -121,8 +123,7 @@ public class EquipoController {
             @RequestParam(value = "familia", required = false) Long familia,
             @RequestParam(value = "subFamilia", required = false) Long subFamilia,
             @RequestParam(value = "existencia", required = false) Long existencia,
-            @RequestParam(value = "costoPorDia", required = false) Long costoPorDia,
-            @RequestParam(value = "imagen", required = false) String file)
+            @RequestParam(value = "costoPorDia", required = false) Long costoPorDia)
     {
         Familia familiaObject = null;
         Familia subFamiliaObject = null;
@@ -130,7 +131,7 @@ public class EquipoController {
         familiaObject = familiaServices.buscarPorId(familia);
         subFamiliaObject = familiaServices.buscarPorId(subFamilia);
 
-        equipoServices.crearEquipo(new Equipo(nombre, familiaObject, subFamiliaObject, existencia, costoPorDia, file));
+        equipoServices.crearEquipo(new Equipo(nombre, familiaObject, subFamiliaObject, existencia, costoPorDia, ""));
 
         return "redirect:/equipo/";
     }
@@ -142,7 +143,7 @@ public class EquipoController {
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
             System.out.println(bytes);
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Path path = Paths.get(UPLOADED_FOLDER + "/" + file.getOriginalFilename());
             Files.write(path, bytes);
 
             Equipo equipo = equipoServices.getEquipoPorID(id);
@@ -225,8 +226,7 @@ public class EquipoController {
                                       @RequestParam(value = "familia", required = false) long familia,
                                       @RequestParam(value = "subFamilia", required = false) long subFamilia,
                                       @RequestParam(value = "existencia", required = false) long existencia,
-                                      @RequestParam(value = "costoPorDia", required = false) long costoPorDia,
-                                      @RequestParam(value = "imagen", required = false) String imagen) {
+                                      @RequestParam(value = "costoPorDia", required = false) long costoPorDia) {
         Familia familiaObject = familiaServices.buscarPorId(familia);
         Familia subFamiliaObject = familiaServices.buscarPorId(subFamilia);
 
@@ -236,7 +236,7 @@ public class EquipoController {
         equipo.setSubFamilia(subFamiliaObject);
         equipo.setExistencia(existencia);
         equipo.setCostoPorDia(costoPorDia);
-        equipo.setImagen(imagen);
+        equipo.setImagen(equipo.getImagen());
         equipoServices.crearEquipo(equipo);
 
         return "redirect:/equipo/";

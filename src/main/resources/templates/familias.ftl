@@ -11,6 +11,7 @@
                 <th>ID</th>
                 <th>${placeholderNombreFamilia}</th>
                 <th>${placeholderSubFamilia}</th>
+                <th>${placeholderFamiliaPadre}</th>
                 <th>${acciones}</th>
                 <th>${acciones2}</th>
             </tr>
@@ -21,6 +22,13 @@
             <td>${familia.id}</td>
             <td>${familia.nombre}</td>
             <td>${familia.subFamilia?string('${mensajeSi}', '${mensajeNo}')}</td>
+            <td>
+                <#if familia.subFamilia>
+                    ${familia.familiaPadre.nombre}
+                    <#else>
+                    N/A
+                </#if>
+            </td>
             <form method="POST" action="/familia/eliminar-familia/${familia.id}">
                 <td>
                     <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/login.css"/>
     <title>${titulo}</title>
 </head>
-<body>
+<body onload="filtrarSubFamilias()">
 <div class="login-form">
     <main class="mx-auto mt-2">
         <div class="panel">
@@ -24,7 +24,7 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">${placeholderFamiliaEquipo}</label>
                 </div>
-                <select class="custom-select" name="familia">
+                <select class="custom-select" name="familia" id="familia" onchange="filtrarSubFamilias()">
                     <#list familias as familia>
                         <#if !familia.subFamilia>
                             <option value="${familia.id}">${familia.nombre}</option>
@@ -36,12 +36,8 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">${placeholderSubFamiliaEquipo}</label>
                 </div>
-                <select class="custom-select" name="subFamilia">
-                    <#list familias as familia>
-                        <#if familia.subFamilia>
-                            <option value="${familia.id}">${familia.nombre}</option>
-                        </#if>
-                    </#list>
+                <select class="custom-select" name="subFamilia" id="listaSubFamilias">
+                    <#--Esto se autogenerara-->
                 </select>
             </div>
             <div class="form-group">
@@ -52,13 +48,32 @@
                 <input type="number" class="form-control" name="costoPorDia" placeholder="${placeholderCostoPorDia}"
                        required/>
             </div>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" name="imagen" required>
-                <label class="custom-file-label" for="validatedCustomFile">${placeholderImagen}</label>
-            </div>
             <button type="submit" class="btn btn-primary mt-2">${botonCrear}</button>
         </form>
     </main>
 </div>
 </body>
+<script>
+    function filtrarSubFamilias() {
+        var listaSubFamilias = [];
+        var familiaJS = document.querySelector("#familia").value;
+
+        <#list familias as familia>
+            <#if familia.subFamilia>
+                var familiaPadreJS = "${familia.familiaPadre.id?string['0']}";
+
+                if (familiaJS == familiaPadreJS) {
+                    listaSubFamilias.push({ id: "${familia.id}", nombre: "${familia.nombre}" });
+                }
+            </#if>
+        </#list>
+
+        document.querySelector("#listaSubFamilias").innerHTML = "";
+        for (var i = 0; i < listaSubFamilias.length; i++) {
+            document.querySelector("#listaSubFamilias").innerHTML += '<option value="' + listaSubFamilias[i].id +'">' + listaSubFamilias[i].nombre +'</option>';
+        }
+
+        console.table(listaSubFamilias);
+    }
+</script>
 </@base.pagina>

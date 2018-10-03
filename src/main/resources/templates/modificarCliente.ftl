@@ -30,10 +30,6 @@
                 <input type="text" class="form-control" name="telefono" value="${cliente.telefono}"
                        required />
             </div>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" name="fotografia" value="${cliente.fotografia}">
-                <label class="custom-file-label" for="validatedCustomFile">${placerholderFotografia}</label>
-            </div>
             <button type="submit" class="btn btn-primary mt-2">${acciones2}</button>
         </form>
     </main>

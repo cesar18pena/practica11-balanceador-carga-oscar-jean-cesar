@@ -36,10 +36,12 @@
                 <select multiple class="custom-select" name="equipos">
                     <#list equipos as equipo>
                         <#if equipo.existencia gt 0>
-                            <option value="${equipo.id}">${equipo.nombre} (${equipo.existencia}) - $${equipo.costoPorDia}/${dia}</option>
+                            <option value="${equipo.id}" class="equipo-option" data-img="/img/${equipo.imagen}" >${equipo.nombre} (${equipo.existencia}) - $${equipo.costoPorDia}/${dia}</option>
                         </#if>
                     </#list>
                 </select>
+
+                <img src="" alt="" id="img-equipo" class="m-2" width="128px" height="128px">
             </div>
 
             <div class="form-group">
@@ -57,4 +59,11 @@
     </main>
 </div>
 </body>
+<script>
+    $(document).ready(function() {
+        $('.equipo-option').on('click', function() {
+           $("#img-equipo").prop("src", $(this).data("img"));
+        });
+    });
+</script>
 </@base.pagina>
