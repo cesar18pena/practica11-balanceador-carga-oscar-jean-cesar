@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Date;
@@ -35,6 +38,8 @@ public class EquipoController {
 
     @Autowired
     private MessageSource messageSource;
+
+    private static String UPLOADED_FOLDER = "//Users//cesarpena//Desktop//practica10-springboot-electronica-oscar-jean-cesar//src//main//resources//static//img//";
 
     @RequestMapping("/")
     public String index(Model model, Locale locale, Principal principal) {
@@ -109,31 +114,52 @@ public class EquipoController {
         return "agregarEquipo";
     }
 
+
     @RequestMapping(value = "/crear", method = RequestMethod.POST)
     public String crearEquipoPOST(
             @RequestParam(value = "nombre", required = false) String nombre,
-            @RequestParam(value = "familia", required = false) long familia,
-            @RequestParam(value = "subFamilia", required = false) long subFamilia,
-            @RequestParam(value = "existencia", required = false) long existencia,
-            @RequestParam(value = "costoPorDia", required = false) long costoPorDia,
-            @RequestParam(value = "imagen", required = false) String imagen) {
+            @RequestParam(value = "familia", required = false) Long familia,
+            @RequestParam(value = "subFamilia", required = false) Long subFamilia,
+            @RequestParam(value = "existencia", required = false) Long existencia,
+            @RequestParam(value = "costoPorDia", required = false) Long costoPorDia,
+            @RequestParam(value = "imagen", required = false) String file)
+    {
         Familia familiaObject = null;
         Familia subFamiliaObject = null;
 
-        if (familia != 0) {
-            familiaObject = familiaServices.buscarPorId(familia);
-        }
-        if (subFamilia != 0) {
-            subFamiliaObject = familiaServices.buscarPorId(subFamilia);
-        }
+        familiaObject = familiaServices.buscarPorId(familia);
+        subFamiliaObject = familiaServices.buscarPorId(subFamilia);
 
-        equipoServices.crearEquipo(new Equipo(nombre, familiaObject, subFamiliaObject, existencia, costoPorDia, imagen));
+        equipoServices.crearEquipo(new Equipo(nombre, familiaObject, subFamiliaObject, existencia, costoPorDia, file));
 
         return "redirect:/equipo/";
     }
 
+    @RequestMapping(value = "/subir-foto/{id}", method = RequestMethod.POST)
+    public String crearFotoPOST(@PathVariable("id") long id, @RequestParam(value = "file", required = false) MultipartFile file) {
+
+        try {
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            System.out.println(bytes);
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path, bytes);
+
+            Equipo equipo = equipoServices.getEquipoPorID(id);
+            equipo.setImagen(file.getOriginalFilename());
+
+            equipoServices.crearEquipo(equipo);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/equipo/";
+    }
+
+
     @RequestMapping(value = "/eliminar-familia/{id}", method = RequestMethod.POST)
-    public String crearClientePOST(@PathVariable("id") long id) {
+    public String crearClientePOST(@PathVariable("id") long id ) {
 
         familiaServices.eliminarFamilia(id);
 

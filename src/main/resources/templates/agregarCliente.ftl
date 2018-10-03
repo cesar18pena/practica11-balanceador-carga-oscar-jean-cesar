@@ -15,7 +15,7 @@
             <h3>${tituloCrearCliente}</h3>
             <h6>${mensajeCrearCliente}</h6>
         </div>
-        <form id="agregarCliente" method="POST" action="/cliente/crear">
+        <form id="agregarCliente" method="POST" action="/cliente/crear" enctype="multipart/form-data">
             <div class="form-group">
                 <input type="text" class="form-control" name="nombre" placeholder="${placeholderNombreCliente}" required
                        autofocus />

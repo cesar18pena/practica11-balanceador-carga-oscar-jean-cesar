@@ -18,9 +18,11 @@
                         <th>${placeholderImagen}</th>
                         <th>${acciones}</th>
                         <th>${acciones2}</th>
+                        <th>Subir Foto</th>
                     </tr>
                     </thead>
                     <tbody>
+
         <#list equipos as equipo>
         <tr>
             <td>${equipo.id}</td>
@@ -33,7 +35,7 @@
             </#if>
             <td>${equipo.existencia}</td>
             <td>${equipo.costoPorDia}</td>
-            <td><img src="./${equipo.imagen}" alt="imagenequipo"></td>
+            <td><img class="rounded-circle" src="/img/${equipo.imagen}" alt="imagenequipo" height="48px" width="48px"></td>
             <form method="POST" action="/equipo/eliminar-equipo/${equipo.id}">
                 <td>
                     <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
@@ -44,6 +46,18 @@
                     <button type="submit" class="btn btn-success"><i class="far fa-edit"></i></button>
                 </td>
             </form>
+            <td><form method="POST" action="/equipo/subir-foto/${equipo.id}" enctype="multipart/form-data">
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                    <div class="input-group-prepend">
+                        <input type="submit" class="input-group-text" />
+                    </div>
+                </div>
+            </form>
+            </td>
         </tr>
         </#list>
                     </tbody>

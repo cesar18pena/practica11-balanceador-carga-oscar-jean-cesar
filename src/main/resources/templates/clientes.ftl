@@ -16,13 +16,14 @@
                     <th>${acciones}</th>
                     <th>${acciones2}</th>
                     <th>${ver}</th>
+                    <th>Subir Foto</th>
                 </tr>
                 </thead>
                 <tbody>
         <#list clientes as cliente>
         <tr>
             <td>${cliente.id}</td>
-            <td><img src="./${cliente.fotografia}" alt="fotocliente" width="20px"></td>
+            <td><img class="rounded-circle" src="/img/${cliente.fotografia}" alt="fotocliente" height="48px" width="48px"></td>
             <td>${cliente.nombre}</td>
             <td>${cliente.cedula}</td>
             <td>${cliente.telefono}</td>
@@ -44,6 +45,18 @@
                 <a href="/cliente/ver/${cliente.id?string['0']}" class="btn btn-primary">
                     <i class="far fa-eye"></i>
                 </a>
+            </td>
+            <td><form method="POST" action="/cliente/subir-foto/${cliente.id}" enctype="multipart/form-data">
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                    <div class="input-group-prepend">
+                        <input type="submit" class="input-group-text" />
+                    </div>
+                </div>
+            </form>
             </td>
         </tr>
         </#list>

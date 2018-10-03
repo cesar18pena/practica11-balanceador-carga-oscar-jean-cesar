@@ -1,9 +1,6 @@
 package com.oscarjeancesar.pucmm.practica10oscarjeancesar.controller;
 
-import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Alquiler;
-import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Cliente;
-import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Rol;
-import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Usuario;
+import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.*;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -15,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.*;
 
@@ -32,6 +33,30 @@ public class ClienteController {
 
     @Autowired
     private MessageSource messageSource;
+
+    private static String UPLOADED_FOLDER = "//Users//cesarpena//Desktop//practica10-springboot-electronica-oscar-jean-cesar//src//main//resources//static//img//";
+
+    @RequestMapping(value = "/subir-foto/{id}", method = RequestMethod.POST)
+    public String crearFotoPOST(@PathVariable("id") long id, @RequestParam(value = "file", required = false) MultipartFile file) {
+
+        try {
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            System.out.println(bytes);
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path, bytes);
+
+            Cliente cliente = clienteServices.getClientePorID(id);
+            cliente.setFotografia(file.getOriginalFilename());
+
+            clienteServices.crearCliente(cliente);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/cliente/";
+    }
 
     @RequestMapping(value = "/")
     public String index(Model model, Locale locale, Principal principal) {
