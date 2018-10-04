@@ -46,7 +46,7 @@
                         </#if>
                     <td>${equipo.existencia}</td>
                     <td>${equipo.costoPorDia}</td>
-                    <td><img src="./${equipo.imagen}" alt="imagenequipo"></td>
+                    <td><img class="rounded-circle"  src="/img/${equipo.imagen}" alt="imagenequipo" height="48px" width="48px"></td>
                     <form method="POST" action="/equipo/devolver/${equipo.id}/${alquiler.id}">
                         <td><button type="submit" class="btn btn-primary"><i class="fas fa-hand-holding-usd"></i></button></td>
                     </form>

@@ -27,8 +27,7 @@
         <#list clientes as cliente>
         <tr>
             <td>${cliente.id}</td>
-            <td><img class="rounded-circle" src="/img/${cliente.fotografia}" alt="fotocliente" height="48px"
-                     width="48px"></td>
+            <td><img class="rounded-circle" src="/img/${cliente.fotografia}" alt="fotocliente" height="48px" width="48px"></td>
             <td>${cliente.nombre}</td>
             <td>${cliente.cedula}</td>
             <td>${cliente.telefono}</td>
