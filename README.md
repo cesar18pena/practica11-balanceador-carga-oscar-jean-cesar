@@ -18,7 +18,7 @@ Crear una aplicación web utilizando SpringBoot, basándose en los conceptos, qu
 
 ## Vídeo de demostración del proyecto
 
-Todavía no realizado.
+https://youtu.be/lkxEEA-YQAI   ==> Click en el link para ver el vídeo.
 
 ## Tecnologías requeridas
 
@@ -36,6 +36,7 @@ Todavía no realizado.
 
 - Font Awesome 5
 - H2
+- ChartJS
 
 ## Modelo de datos
 Para esta aplicación es requerido utilizar una colección estática de clases donde se modelan los objetivos de la práctica basándose en las propiedades que tiene que tener la práctica basándose en los objetivos. 
