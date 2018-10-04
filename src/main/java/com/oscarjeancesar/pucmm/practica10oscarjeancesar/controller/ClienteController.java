@@ -35,6 +35,9 @@ public class ClienteController {
     @Autowired
     private MessageSource messageSource;
 
+    @Autowired
+    UsuarioServices usuarioServices;
+
     private static String UPLOADED_FOLDER = new File("src/main/resources/static/img").getAbsolutePath();
 
     @RequestMapping(value = "/subir-foto/{id}", method = RequestMethod.POST)
@@ -89,6 +92,8 @@ public class ClienteController {
         model.addAttribute("clientes", clienteServices.getListadoDeClientes());
 
         model.addAttribute("subirFoto", messageSource.getMessage("subirFoto", null, locale));
+
+        model.addAttribute("esAdmin", usuarioServices.buscarPorNombre(principal.getName()).isEsAdmin());
 
         return "clientes";
     }

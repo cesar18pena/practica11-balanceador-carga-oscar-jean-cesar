@@ -16,17 +16,19 @@
                         <th>${placeholderSubFamiliaEquipo}</th>
                         <th>${placeholderExistencia}</th>
                         <th>${placeholderCostoPorDia}</th>
-                        <th>${acciones}</th>
-                        <th>${acciones2}</th>
-                        <th>${subirFoto}</th>
+                        <#if esAdmin>
+                            <th>${acciones}</th>
+                            <th>${acciones2}</th>
+                            <th>${subirFoto}</th>
+                        </#if>
                     </tr>
                     </thead>
                     <tbody>
-
         <#list equipos as equipo>
         <tr>
             <td>${equipo.id}</td>
-            <td><img class="rounded-circle" src="/img/${equipo.imagen}" alt="imagenequipo" height="48px" width="48px"></td>
+            <td><img class="rounded-circle" src="/img/${equipo.imagen}" alt="imagenequipo" height="48px" width="48px">
+            </td>
             <td>${equipo.nombre}</td>
             <#if equipo.familia??>
                 <td>${equipo.familia.nombre}</td>
@@ -36,28 +38,32 @@
             </#if>
             <td>${equipo.existencia}</td>
             <td>${equipo.costoPorDia}</td>
-            <form method="POST" action="/equipo/eliminar-equipo/${equipo.id}">
+            <#if esAdmin>
+                <form method="POST" action="/equipo/eliminar-equipo/${equipo.id}">
+                    <td>
+                        <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                    </td>
+                </form>
+                <form method="POST" action="/equipo/modificar-equipo/${equipo.id}">
+                    <td>
+                        <button type="submit" class="btn btn-success"><i class="far fa-edit"></i></button>
+                    </td>
+                </form>
                 <td>
-                    <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                    <form method="POST" action="/equipo/subir-foto/${equipo.id}" enctype="multipart/form-data">
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                            <div class="input-group-prepend">
+                                <input type="submit" class="input-group-text"/>
+                            </div>
+                        </div>
+                    </form>
                 </td>
-            </form>
-            <form method="POST" action="/equipo/modificar-equipo/${equipo.id}">
-                <td>
-                    <button type="submit" class="btn btn-success"><i class="far fa-edit"></i></button>
-                </td>
-            </form>
-            <td><form method="POST" action="/equipo/subir-foto/${equipo.id}" enctype="multipart/form-data">
-                <div class="input-group mb-3">
-                    <div class="custom-file">
-                        <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
-                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                    </div>
-                    <div class="input-group-prepend">
-                        <input type="submit" class="input-group-text" />
-                    </div>
-                </div>
-            </form>
-            </td>
+            </#if>
+
         </tr>
         </#list>
                     </tbody>

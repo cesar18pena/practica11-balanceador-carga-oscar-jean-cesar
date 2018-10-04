@@ -13,20 +13,26 @@
                     <th>${placeholderNombreCliente}</th>
                     <th>${placeholderCedula}</th>
                     <th>${placerholderTelefono}</th>
-                    <th>${acciones}</th>
-                    <th>${acciones2}</th>
+                    <#if esAdmin>
+                        <th>${acciones}</th>
+                        <th>${acciones2}</th>
+                    </#if>
                     <th>${ver}</th>
-                    <th>${subirFoto}</th>
+                    <#if esAdmin>
+                        <th>${subirFoto}</th>
+                    </#if>
                 </tr>
                 </thead>
                 <tbody>
         <#list clientes as cliente>
         <tr>
             <td>${cliente.id}</td>
-            <td><img class="rounded-circle" src="/img/${cliente.fotografia}" alt="fotocliente" height="48px" width="48px"></td>
+            <td><img class="rounded-circle" src="/img/${cliente.fotografia}" alt="fotocliente" height="48px"
+                     width="48px"></td>
             <td>${cliente.nombre}</td>
             <td>${cliente.cedula}</td>
             <td>${cliente.telefono}</td>
+            <#if esAdmin>
             <form method="POST" action="/cliente/eliminar-cliente/${cliente.id?string['0']}">
                 <td>
                     <button type="submit" class="btn btn-danger">
@@ -41,23 +47,27 @@
                     </button>
                 </td>
             </form>
+            </#if>
             <td>
                 <a href="/cliente/ver/${cliente.id?string['0']}" class="btn btn-primary">
                     <i class="far fa-eye"></i>
                 </a>
             </td>
-            <td><form method="POST" action="/cliente/subir-foto/${cliente.id}" enctype="multipart/form-data">
-                <div class="input-group mb-3">
-                    <div class="custom-file">
-                        <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
-                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            <#if esAdmin>
+            <td>
+                <form method="POST" action="/cliente/subir-foto/${cliente.id}" enctype="multipart/form-data">
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                        <div class="input-group-prepend">
+                            <input type="submit" class="input-group-text"/>
+                        </div>
                     </div>
-                    <div class="input-group-prepend">
-                        <input type="submit" class="input-group-text" />
-                    </div>
-                </div>
-            </form>
+                </form>
             </td>
+            </#if>
         </tr>
         </#list>
                 </tbody>

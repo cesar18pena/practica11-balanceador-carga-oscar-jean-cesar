@@ -2,6 +2,7 @@ package com.oscarjeancesar.pucmm.practica10oscarjeancesar.controller;
 
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Familia;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.FamiliaServices;
+import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.UsuarioServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,9 @@ public class FamiliaController {
 
     @Autowired
     private MessageSource messageSource;
+
+    @Autowired
+    UsuarioServices usuarioServices;
 
     @RequestMapping("/")
     public String index(Model model, Locale locale, Principal principal) {
@@ -52,6 +56,8 @@ public class FamiliaController {
         model.addAttribute("acciones2", messageSource.getMessage("acciones2", null, locale));
 
         model.addAttribute("familias", familiaServices.listadoFamilias());
+
+        model.addAttribute("esAdmin", usuarioServices.buscarPorNombre(principal.getName()).isEsAdmin());
 
         return "familias";
     }
@@ -93,14 +99,12 @@ public class FamiliaController {
 
         boolean esSubFamilia = subFamilia != null;
 
-        if(esSubFamilia) {
+        if (esSubFamilia) {
             Familia familiaPadreObj = familiaServices.buscarPorId(familiaPadre);
             familiaServices.crearFamilia(new Familia(nombre, esSubFamilia, familiaPadreObj));
         } else {
             familiaServices.crearFamilia(new Familia(nombre, esSubFamilia));
         }
-
-
 
         return "redirect:/familia/";
     }
@@ -129,6 +133,7 @@ public class FamiliaController {
 
         model.addAttribute("placeholderNombreFamilia", messageSource.getMessage("placeholderNombreFamilia", null, locale));
         model.addAttribute("placeholderSubFamilia", messageSource.getMessage("placeholderSubFamilia", null, locale));
+        model.addAttribute("placeholderFamiliaPadre", messageSource.getMessage("placeholderFamiliaPadre", null, locale));
         model.addAttribute("botonCrear", messageSource.getMessage("botonCrear", null, locale));
 
         model.addAttribute("mensajeSi", messageSource.getMessage("mensajeSi", null, locale));
@@ -153,13 +158,22 @@ public class FamiliaController {
     @RequestMapping(value = "/modificar/{id}", method = RequestMethod.POST)
     public String modificarFamiliaPOST(@PathVariable("id") long id,
                                        @RequestParam(value = "nombre", required = false) String nombre,
-                                       @RequestParam(value = "subFamilia", required = false) String subFamilia
+                                       @RequestParam(value = "subFamilia", required = false) String subFamilia,
+                                       @RequestParam(value = "familiaPadre", required = false) Long familiaPadre
     ) {
         boolean esSubFamilia = subFamilia != null;
 
         Familia familia = familiaServices.getFamiliaPorID(id);
         familia.setNombre(nombre);
         familia.setSubFamilia(esSubFamilia);
+
+        if (esSubFamilia) {
+            Familia familiaPadreObj = familiaServices.buscarPorId(familiaPadre);
+            familia.setFamiliaPadre(familiaPadreObj);
+        } else {
+            familia.setFamiliaPadre(null);
+        }
+
         familiaServices.crearFamilia(familia);
 
         return "redirect:/familia/";

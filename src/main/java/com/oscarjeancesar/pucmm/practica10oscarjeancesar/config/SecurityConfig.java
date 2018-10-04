@@ -1,22 +1,15 @@
 package com.oscarjeancesar.pucmm.practica10oscarjeancesar.config;
 
-import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.FileSystemStorageService;
-import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.StorageService;
-import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.UsuarioServices;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -26,39 +19,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-//    // Configuación para la validación del acceso modo JDBC
-//    private DataSource dataSource;
-//    @Value("${query.user-jdbc}")
-//    private String queryUsuario;
-//    @Value("${query.rol-jdbc}")
-//    private String queryRol;
-//
-//    private UserDetailsService userDetailsService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Value("${spring.queries.users-query}")
+    private String usersQuery;
+
+    @Value("${spring.queries.roles-query}")
+    private String rolesQuery;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //Clase para encriptar contraseña
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
-        //Cargando los usuarios en memoria.
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password("1234")
-                .authorities("ADMIN", "USER")
-                .and()
-                .withUser("user")
-                .password("1234")
-                .authorities("USER");
-
-        //Configuración para acceso vía JDBC
-//       auth.jdbcAuthentication()
-//                .usersByUsernameQuery(queryUsuario)
-//                .authoritiesByUsernameQuery(queryRol)
-//                .dataSource(dataSource)
-//                .passwordEncoder(bCryptPasswordEncoder);
-//
-//        //Configuración JPA.
-//        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+    protected void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
+        auth.
+                jdbcAuthentication()
+                .usersByUsernameQuery(usersQuery)
+                .authoritiesByUsernameQuery(rolesQuery)
+                .dataSource(dataSource)
+                .passwordEncoder(bCryptPasswordEncoder());
     }
 
     /*
@@ -109,19 +90,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public static PasswordEncoder passwordEncoder() {
-//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//    }
-//
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setUserDetailsService(userDetailsService);
-//        authenticationProvider.setPasswordEncoder(passwordEncoder());
-//        return authenticationProvider;
-//    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

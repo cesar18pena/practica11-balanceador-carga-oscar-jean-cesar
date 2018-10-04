@@ -12,8 +12,10 @@
                 <th>${placeholderNombreFamilia}</th>
                 <th>${placeholderSubFamilia}</th>
                 <th>${placeholderFamiliaPadre}</th>
-                <th>${acciones}</th>
-                <th>${acciones2}</th>
+                <#if esAdmin>
+                    <th>${acciones}</th>
+                    <th>${acciones2}</th>
+                </#if>
             </tr>
             </thead>
             <tbody>
@@ -29,16 +31,18 @@
                     N/A
                 </#if>
             </td>
-            <form method="POST" action="/familia/eliminar-familia/${familia.id}">
-                <td>
-                    <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                </td>
-            </form>
-            <form method="POST" action="/familia/modificar-familia/${familia.id}">
-                <td>
-                    <button type="submit" class="btn btn-success"><i class="far fa-edit"></i></button>
-                </td>
-            </form>
+            <#if esAdmin>
+                <form method="POST" action="/familia/eliminar-familia/${familia.id}">
+                    <td>
+                        <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                    </td>
+                </form>
+                <form method="POST" action="/familia/modificar-familia/${familia.id}">
+                    <td>
+                        <button type="submit" class="btn btn-success"><i class="far fa-edit"></i></button>
+                    </td>
+                </form>
+            </#if>
         </tr>
         </#list>
             </tbody>

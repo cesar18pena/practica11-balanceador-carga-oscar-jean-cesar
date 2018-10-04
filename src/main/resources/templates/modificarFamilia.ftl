@@ -20,15 +20,63 @@
                 <input type="text" class="form-control" name="id" value="${familia.id}" required readonly/>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="nombre" value="${familia.nombre}" required />
+                <input type="text" class="form-control" name="nombre" value="${familia.nombre}" required/>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="subFamilia" value="true" />
+                <#if familia.subFamilia>
+                    <input class="form-check-input" type="checkbox" name="subFamilia" value="true" checked  id="subFamilia" onclick="cambiar()"/>
+                <#else>
+                    <input class="form-check-input" type="checkbox" name="subFamilia" value="true"  id="subFamilia" onclick="cambiar()"/>
+                </#if>
                 <label class="form-check-label" for="subFamilia">${placeholderSubFamilia}</label>
+            </div>
+            <div class="input-group mb-3" id="familiaPadre">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">${placeholderFamiliaPadre}</label>
+                </div>
+                <select class="custom-select" name="familiaPadre">
+                    <#list familias as familiaX>
+                        <#if !familiaX.subFamilia>
+                            <#if familia.familiaPadre??>
+                                <#if familiaX.id==familia.familiaPadre.id>
+                                    <option value="${familiaX.id}" selected>${familiaX.nombre}</option>
+                                <#else>
+                                    <option value="${familiaX.id}">${familiaX.nombre}</option>
+                                </#if>
+                                <#else>
+                                    <#if familiaX.id != familia.id>
+                                        <option value="${familiaX.id}">${familiaX.nombre}</option>
+                                    </#if>
+                            </#if>
+                        </#if>
+                    </#list>
+                </select>
             </div>
             <button type="submit" class="btn btn-primary mt-2">${acciones2}</button>
         </form>
     </main>
 </div>
 </body>
+
+<script>
+    var estado = "${familia.subFamilia?c}";
+
+    var familiaPadre = document.querySelector("#familiaPadre");
+
+    console.log(estado);
+
+    if (estado == "true") {
+        familiaPadre.style.visibility = "visible";
+    } else {
+        familiaPadre.style.visibility = "collapse";
+    }
+
+    function cambiar() {
+        if (familiaPadre.style.visibility === "collapse") {
+            document.querySelector("#familiaPadre").style.visibility = "visible";
+        } else {
+            document.querySelector("#familiaPadre").style.visibility = "collapse";
+        }
+    }
+</script>
 </@base.pagina>

@@ -6,6 +6,7 @@ import com.oscarjeancesar.pucmm.practica10oscarjeancesar.model.Familia;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.AlquilerServices;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.EquipoServices;
 import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.FamiliaServices;
+import com.oscarjeancesar.pucmm.practica10oscarjeancesar.service.UsuarioServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,9 @@ public class EquipoController {
 
     @Autowired
     AlquilerServices alquilerServices;
+
+    @Autowired
+    UsuarioServices usuarioServices;
 
     @Autowired
     private MessageSource messageSource;
@@ -80,6 +84,8 @@ public class EquipoController {
         model.addAttribute("equipos", equipoServices.listadoEquipos());
 
         model.addAttribute("subirFoto", messageSource.getMessage("subirFoto", null, locale));
+
+        model.addAttribute("esAdmin", usuarioServices.buscarPorNombre(principal.getName()).isEsAdmin());
 
         return "equipos";
     }

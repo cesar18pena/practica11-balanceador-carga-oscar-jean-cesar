@@ -11,6 +11,7 @@ public class Usuario implements Serializable {
     private String username;
     private boolean esAdmin;
     private String password;
+    private int active;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private
@@ -24,6 +25,7 @@ public class Usuario implements Serializable {
         this.esAdmin = esAdmin;
         this.password = password;
         this.roles = roles;
+        this.active = 1;
     }
 
     public long getId() {
