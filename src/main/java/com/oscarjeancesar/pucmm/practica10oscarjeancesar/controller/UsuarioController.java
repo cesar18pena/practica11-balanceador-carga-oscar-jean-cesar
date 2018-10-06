@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Locale;
 import java.security.Principal;
@@ -33,7 +34,7 @@ public class UsuarioController {
     private MessageSource messageSource;
 
     @RequestMapping(value = "/")
-    public String index(Model model, Locale locale, Principal principal) {
+    public String index(Model model, Locale locale, Principal principal, HttpServletRequest request) {
         model.addAttribute("titulo", messageSource.getMessage("titulo", null, locale));
         model.addAttribute("mensaje", messageSource.getMessage("mensaje", null, locale));
         model.addAttribute("creador", messageSource.getMessage("creador", null, locale));
@@ -47,6 +48,9 @@ public class UsuarioController {
         model.addAttribute("linkUsuario", messageSource.getMessage("linkUsuario", null, locale));
 
         model.addAttribute("usuario", principal.getName());
+
+        model.addAttribute("servidor", "" + request.getLocalAddr());
+        model.addAttribute("puerto", "" + request.getLocalPort());
 
         return "index";
     }

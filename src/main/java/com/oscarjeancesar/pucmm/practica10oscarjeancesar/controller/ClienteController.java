@@ -139,7 +139,6 @@ public class ClienteController {
 
     @RequestMapping(value = "/eliminar-cliente/{id}", method = RequestMethod.POST)
     public String eliminarClientePOST(@PathVariable("id") long id) {
-
         clienteServices.eliminarCliente(id);
 
         return "redirect:/cliente/";

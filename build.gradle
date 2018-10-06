@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.7.RELEASE'
+        springBootVersion = '2.0.5.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -36,6 +36,11 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.apache.tomcat:tomcat-dbcp:9.0.12')
     compile('com.h2database:h2:1.4.192')
+    compile('org.springframework.session:spring-session-core')
+    compile('org.springframework.session:spring-session-hazelcast')
+
+    runtime('org.springframework.boot:spring-boot-devtools')
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
 }

@@ -29,7 +29,7 @@ public class AlquilerServices {
     }
 
     public Alquiler getAlquilerPorID(long id){
-        return alquilerRepository.findOne(id);
+        return alquilerRepository.getOne(id);
     }
 
     public List<Alquiler> historialAlquiler(Cliente cliente) {

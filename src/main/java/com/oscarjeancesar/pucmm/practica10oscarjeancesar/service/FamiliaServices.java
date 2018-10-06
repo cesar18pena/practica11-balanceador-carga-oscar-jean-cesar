@@ -27,10 +27,10 @@ public class FamiliaServices {
     }
 
     public void eliminarFamilia(long id){
-        familiaRepository.delete(id);
+        familiaRepository.deleteById(id);
     }
 
     public Familia getFamiliaPorID(long id){
-        return familiaRepository.findOne(id);
+        return familiaRepository.getOne(id);
     }
 }

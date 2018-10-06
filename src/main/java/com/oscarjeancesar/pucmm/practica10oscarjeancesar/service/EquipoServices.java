@@ -23,10 +23,10 @@ public class EquipoServices {
     }
 
     public void eliminarEquipo(long id){
-        equipoRepository.delete(id);
+        equipoRepository.deleteById(id);
     }
 
     public Equipo getEquipoPorID(long id){
-        return equipoRepository.findOne(id);
+        return equipoRepository.getOne(id);
     }
 }

@@ -26,10 +26,10 @@ public class ClienteServices {
     }
 
     public void eliminarCliente(long id){
-        clienteRepository.delete(id);
+        clienteRepository.deleteById(id);
     }
 
     public Cliente getClientePorID(long id){
-        return clienteRepository.findOne(id);
+        return clienteRepository.getOne(id);
     }
 }
