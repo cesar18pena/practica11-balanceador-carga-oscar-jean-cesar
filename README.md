@@ -18,7 +18,7 @@ Seguir la práctica #10 en Spring Boot, implementando en esta un balanceador de 
 
 ## Vídeo de demostración del proyecto
 
-Todavía no realizado.
+https://youtu.be/BVoGGP0Z13k   ==>  (click en el enlace para ver el vídeo de demostración de la práctica #11).
 
 ## Tecnologías requeridas
 
